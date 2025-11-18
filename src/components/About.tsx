@@ -1,4 +1,4 @@
-import { Target, History, Users as UsersIcon, Handshake } from 'lucide-react';
+import { Target, History as HistoryIcon, Users as UsersIcon, Handshake } from 'lucide-react';
 import { Card, CardContent } from './ui/card';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
@@ -33,70 +33,113 @@ function AboutOverview({ onNavigate }: { onNavigate: (page: string) => void }) {
       title: 'Vision & Mission',
       description: 'Our guiding principles and what we strive to achieve',
       page: 'vision-mission',
-      color: 'bg-blue-500'
+      color: 'from-blue-500 to-indigo-600'
     },
     {
-      icon: History,
+      icon: HistoryIcon,
       title: 'Our Story',
       description: 'The journey of DDI and how we got started',
       page: 'history',
-      color: 'bg-green-500'
+      color: 'from-green-400 to-green-600'
     },
     {
       icon: UsersIcon,
       title: 'Leadership & Team',
       description: 'Meet the people driving our mission forward',
       page: 'team',
-      color: 'bg-purple-500'
+      color: 'from-purple-500 to-pink-500'
     },
     {
       icon: Handshake,
       title: 'Our Partners',
       description: 'Organizations and institutions we work with',
       page: 'partners',
-      color: 'bg-orange-500'
+      color: 'from-yellow-400 to-orange-500'
     },
   ];
 
   return (
-    <div className="py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h1 className="text-5xl mb-6">About DDI</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Dedicated Development Initiative (DDI) is a comprehensive development organization 
-            committed to creating sustainable positive change through education, economic empowerment, 
-            and social services.
-          </p>
+    <div className="bg-gradient-to-b from-slate-50 via-white to-slate-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        {/* Hero */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center mb-12">
+          <div>
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-700 mb-4">About DDI</span>
+            <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight text-slate-900 mb-4">Developing Youth and Their Potentials</h1>
+            <p className="text-lg text-slate-600 max-w-2xl mb-6">
+              Destiny Development Initiative (DDI) is a human resource and capacity building organization committed to developing youth and their potentials towards effective and efficient living. Established in 2007, we provide quality service and sustainability through strategic operations.
+            </p>
+
+            <div className="flex flex-wrap gap-3">
+              <button
+                onClick={() => onNavigate('vision-mission')}
+                className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white rounded-md px-5 py-3 text-sm font-medium shadow"
+              >
+                Our Vision & Mission
+              </button>
+
+              <button
+                onClick={() => onNavigate('team')}
+                className="inline-flex items-center justify-center border border-indigo-200 text-indigo-700 bg-white rounded-md px-5 py-3 text-sm font-medium hover:bg-indigo-50"
+              >
+                Meet the Team
+              </button>
+            </div>
+          </div>
+
+          <div className="order-first lg:order-last">
+            <div className="rounded-xl overflow-hidden shadow-2xl">
+              <ImageWithFallback
+                src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=1400&q=80"
+                alt="DDI community work"
+                className="w-full h-64 sm:h-80 md:h-96 object-cover"
+              />
+            </div>
+          </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          {sections.map((item, index) => {
-            const Icon = item.icon;
+        {/* Feature grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {sections.map((item, idx) => {
+            const Icon = item.icon as any;
             return (
               <Card
-                key={index}
-                className="hover:shadow-lg transition-shadow cursor-pointer"
+                key={idx}
+                className="cursor-pointer hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300"
                 onClick={() => onNavigate(item.page)}
               >
-                <CardContent className="p-8">
-                  <div className={`w-14 h-14 ${item.color} rounded-lg flex items-center justify-center mb-4`}>
-                    <Icon className="w-7 h-7 text-white" />
+                <CardContent className="p-6">
+                  <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-3 bg-gradient-to-br ${item.color}`}>
+                    <Icon className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="text-2xl mb-3">{item.title}</h3>
-                  <p className="text-gray-600">{item.description}</p>
+                  <h3 className="text-lg font-semibold mb-1 text-slate-900">{item.title}</h3>
+                  <p className="text-sm text-slate-600">{item.description}</p>
                 </CardContent>
               </Card>
             );
           })}
         </div>
 
-        <div className="relative h-96 rounded-lg overflow-hidden shadow-xl">
-          <ImageWithFallback
-            src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0ZWFtd29yayUyMGNvbGxhYm9yYXRpb258ZW58MXx8fHwxNzYzNDE4NzM5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-            alt="DDI Team"
-            className="w-full h-full object-cover"
-          />
+        {/* How we help section */}
+        <div className="bg-white rounded-xl shadow px-6 py-8">
+          <h2 className="text-2xl font-semibold text-slate-900 mb-4">Our Focal Areas</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="flex gap-4 items-start">
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold">1</div>
+              <div>
+                <h4 className="font-semibold text-slate-900">Youth Empowerment & Engagement</h4>
+                <p className="text-sm text-slate-600">Enterprise development, economic empowerment, education promotion, health for development, and good governance strategies.</p>
+              </div>
+            </div>
+
+            <div className="flex gap-4 items-start">
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold">2</div>
+              <div>
+                <h4 className="font-semibold text-slate-900">Care and Support for OVC</h4>
+                <p className="text-sm text-slate-600">Providing care and support for orphans and vulnerable children through community mobilization and coordinated aid.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -104,60 +147,66 @@ function AboutOverview({ onNavigate }: { onNavigate: (page: string) => void }) {
 }
 
 function VisionMission() {
+  const values = [
+    { letter: 'C', title: 'Commitment', description: 'Dedication to God, mission, and excellence' },
+    { letter: 'R', title: 'Relationship', description: 'Building meaningful connections' },
+    { letter: 'E', title: 'Excellence', description: 'Striving for the highest standards' },
+    { letter: 'A', title: 'Accountability', description: 'Taking responsibility for actions' },
+    { letter: 'T', title: 'Teamwork', description: 'Collaborating for greater impact' },
+    { letter: 'I', title: 'Innovative', description: 'Embracing creativity and solutions' },
+    { letter: 'N', title: 'Networking', description: 'Cultivating relationships with integrity' },
+    { letter: 'G', title: 'Growth', description: 'Pursuing continuous development' },
+  ];
+
   return (
-    <div className="py-20">
+    <div className="py-20 bg-slate-50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-5xl mb-12 text-center">Vision, Mission & Values</h1>
-        
-        <div className="space-y-12">
-          <Card>
-            <CardContent className="p-8">
-              <h2 className="text-3xl mb-4 text-blue-600">Our Vision</h2>
-              <p className="text-lg text-gray-700 leading-relaxed">
-                A world where every individual has access to quality education, economic opportunities, 
-                and the resources needed to achieve their full potential and contribute meaningfully to society.
+        <h1 className="text-4xl sm:text-5xl mb-8 font-extrabold text-slate-900">Vision, Mission & Values</h1>
+
+        <div className="space-y-6">
+          <Card className="transform hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
+            <CardContent className="p-6">
+              <h2 className="text-xl mb-2 text-blue-600 font-semibold">Our Vision</h2>
+              <p className="text-base text-slate-700 leading-relaxed">
+                Becoming a global brand that is positively impacting the world with Godly and creative solution.
               </p>
             </CardContent>
           </Card>
 
-          <Card>
-            <CardContent className="p-8">
-              <h2 className="text-3xl mb-4 text-green-600">Our Mission</h2>
-              <p className="text-lg text-gray-700 leading-relaxed">
-                To empower communities through comprehensive programs in education, economic development, 
-                and social services. We work to create sustainable change by providing scholarships, 
-                business consulting, vocational training, and media services that inspire and transform lives.
+          <Card className="transform hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
+            <CardContent className="p-6">
+              <h2 className="text-xl mb-2 text-blue-600 font-semibold">Our Mission</h2>
+              <p className="text-base text-slate-700 leading-relaxed">
+                Creating, organizing and providing resource materials, trainings, opportunities, services, environments, exposures and experience that will help people live effective and efficient lives.
               </p>
             </CardContent>
           </Card>
 
-          <Card>
-            <CardContent className="p-8">
-              <h2 className="text-3xl mb-4 text-purple-600">Our Values</h2>
-              <ul className="space-y-3 text-lg text-gray-700">
-                <li className="flex items-start">
-                  <span className="text-purple-600 mr-2">•</span>
-                  <span><strong>Excellence:</strong> We strive for the highest standards in all our programs and services</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-purple-600 mr-2">•</span>
-                  <span><strong>Integrity:</strong> We operate with transparency, honesty, and accountability</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-purple-600 mr-2">•</span>
-                  <span><strong>Empowerment:</strong> We believe in equipping people with skills and resources for self-sufficiency</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-purple-600 mr-2">•</span>
-                  <span><strong>Innovation:</strong> We embrace creative solutions to address complex challenges</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-purple-600 mr-2">•</span>
-                  <span><strong>Collaboration:</strong> We partner with communities, organizations, and governments to maximize impact</span>
-                </li>
-              </ul>
+          <Card className="transform hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
+            <CardContent className="p-6">
+              <h2 className="text-xl mb-2 text-blue-600 font-semibold">Our Goal</h2>
+              <p className="text-base text-slate-700 leading-relaxed">
+                To create a visible development in the Nigeria society by helping as many people as possible to live effective and efficient lives.
+              </p>
             </CardContent>
           </Card>
+
+          <div className="mt-8">
+            <h2 className="text-2xl mb-6 font-bold text-slate-900">Our Values: CREATING</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {values.map((value, index) => (
+                <div key={index} className="flex items-start gap-4 bg-white p-4 rounded-lg border border-blue-100 hover:shadow-lg transition-all">
+                  <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center text-2xl font-bold text-blue-600">
+                    {value.letter}
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-800">{value.title}</h3>
+                    <p className="text-sm text-slate-600">{value.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -166,45 +215,18 @@ function VisionMission() {
 
 function History() {
   return (
-    <div className="py-20">
+    <div className="py-20 bg-slate-50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-5xl mb-12 text-center">Our Story</h1>
-        
-        <div className="space-y-8">
-          <p className="text-lg text-gray-700 leading-relaxed">
-            DDI was founded with a simple yet powerful vision: to create pathways for individuals 
-            and communities to break the cycle of poverty through education and economic empowerment.
-          </p>
+        <h1 className="text-4xl sm:text-5xl mb-8 font-extrabold text-slate-900">Organizational Background</h1>
 
+        <div className="space-y-6">
           <Card>
-            <CardContent className="p-8">
-              <h3 className="text-2xl mb-4">The Beginning</h3>
-              <p className="text-gray-700 leading-relaxed">
-                What started as a small scholarship program for disadvantaged students has grown 
-                into a comprehensive development organization with multiple arms serving thousands 
-                of beneficiaries across various sectors.
+            <CardContent className="p-6">
+              <p className="text-base text-slate-700 leading-relaxed mb-4">
+                Destiny Development Initiative (DDI) is a human resource and capacity building organization committed to the course of developing youth and their potentials towards effective and efficient living. It is a nonprofit making, non-governmental organization established in 2007 in response to the inherent latent and manifest problems that exist in the present social system and organizations in Nigeria.
               </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-8">
-              <h3 className="text-2xl mb-4">Growth & Evolution</h3>
-              <p className="text-gray-700 leading-relaxed">
-                Over the years, DDI expanded its services to include business consulting, media production, 
-                vocational training, and micro-credit schemes. Each program was developed in response to 
-                identified community needs and designed to create sustainable, long-term impact.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-8">
-              <h3 className="text-2xl mb-4">Today</h3>
-              <p className="text-gray-700 leading-relaxed">
-                Today, DDI operates through multiple specialized arms - DDI Social Service, DDI Consult, 
-                and DDI Ventures - each contributing unique value while working together towards our 
-                shared mission of community empowerment and sustainable development.
+              <p className="text-base text-slate-700 leading-relaxed">
+                A non-profit organization geared for success and growth needs a foundation of value, expertise and experience that encompasses both its history and the people who make it what it is; the employees, the board, the donors and partners. At Destiny Development Initiative (DDI), providing quality service and Sustainability is an integral part of the organization foundation. This foundation is the basis for Strategic Arms of Operations that had enabled more than 40 employees channel their knowledge and skills in strengthening communities, provided better services that are leading towards a better Socio-Economic outcome across the states of our operation.
               </p>
             </CardContent>
           </Card>
@@ -225,22 +247,21 @@ function Team() {
   ];
 
   return (
-    <div className="py-20">
+    <div className="py-20 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-5xl mb-12 text-center">Our Leadership & Team</h1>
-        
-        <p className="text-xl text-gray-600 text-center mb-16 max-w-3xl mx-auto">
-          DDI is powered by a dedicated team of professionals, volunteers, and community leaders 
-          committed to creating positive change.
+        <h1 className="text-4xl sm:text-5xl mb-6 font-extrabold text-slate-900">Our Leadership & Team</h1>
+
+        <p className="text-base text-slate-600 mb-8 max-w-3xl">
+          DDI is powered by a dedicated team of professionals, volunteers, and community leaders committed to creating positive change.
         </p>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {teamMembers.map((member, index) => (
-            <Card key={index}>
-              <CardContent className="p-6">
-                <h3 className="text-xl mb-2">{member.name}</h3>
-                <div className="text-blue-600 mb-3">{member.role}</div>
-                <p className="text-gray-600">{member.description}</p>
+            <Card key={index} className="transform hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
+              <CardContent className="p-4">
+                <div className="w-full h-12 mb-4 rounded-md bg-gradient-to-r from-indigo-50 to-purple-50 flex items-center justify-center text-indigo-700 font-semibold">{member.name}</div>
+                <div className="text-indigo-700 mb-2 font-medium">{member.role}</div>
+                <p className="text-slate-600 text-sm">{member.description}</p>
               </CardContent>
             </Card>
           ))}
@@ -271,23 +292,23 @@ function Partners() {
   ];
 
   return (
-    <div className="py-20">
+    <div className="py-20 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-5xl mb-12 text-center">Our Partners</h1>
-        
-        <p className="text-xl text-gray-600 text-center mb-16 max-w-3xl mx-auto">
+        <h1 className="text-4xl sm:text-5xl mb-6 font-extrabold text-slate-900">Our Partners</h1>
+
+        <p className="text-base text-slate-600 mb-8 max-w-3xl">
           We work with a diverse network of partners to maximize our impact and reach more communities.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {partnerCategories.map((category, index) => (
-            <Card key={index}>
-              <CardContent className="p-8">
-                <h3 className="text-2xl mb-4 text-blue-600">{category.title}</h3>
-                <ul className="space-y-2">
+            <Card key={index} className="transform hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
+              <CardContent className="p-6">
+                <h3 className="text-lg mb-2 font-semibold text-indigo-700">{category.title}</h3>
+                <ul className="space-y-2 text-sm text-slate-700">
                   {category.partners.map((partner, pIndex) => (
-                    <li key={pIndex} className="flex items-center text-gray-700">
-                      <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                    <li key={pIndex} className="flex items-center text-slate-700">
+                      <span className="w-2 h-2 bg-indigo-600 rounded-full mr-3"></span>
                       {partner}
                     </li>
                   ))}

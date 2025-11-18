@@ -7,7 +7,8 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card"
       className={cn(
-        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border",
+        // ensure cards don't overflow their grid/flex parents and have a smooth visual
+        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border overflow-hidden min-h-0",
         className,
       )}
       {...props}
@@ -65,7 +66,8 @@ function CardContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card-content"
-      className={cn("px-6 [&:last-child]:pb-6", className)}
+      // use a smaller default padding to avoid nested excessive spacing when callers also pass padding
+      className={cn("p-4 [&:last-child]:pb-4", className)}
       {...props}
     />
   );
