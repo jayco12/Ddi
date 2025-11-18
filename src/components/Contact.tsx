@@ -74,17 +74,17 @@ export function Contact() {
     {
       icon: MapPin,
       title: 'Office Location',
-      details: ['DDI Head Office', 'Address to be provided', 'City, Country']
+      details: ['7, Raimi Omole St, Imo, Ilesa', 'Osun State, Nigeria', '23303']
     },
     {
       icon: Phone,
       title: 'Phone',
-      details: ['+XXX XXX XXX XXX', '+XXX XXX XXX XXX']
+      details: ['+234 (703) 090 7726']
     },
     {
       icon: Mail,
       title: 'Email',
-      details: ['info@ddi.org', 'contact@ddi.org']
+      details: ['destinydevelopment2011@gmail.com']
     }
   ];
 
