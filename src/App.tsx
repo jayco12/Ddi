@@ -6,6 +6,7 @@ import { Blog } from './components/Blog';
 import { BlogPost } from './components/BlogPost';
 import { Gallery } from './components/Gallery';
 import { Contact } from './components/Contact';
+import { Mentor } from './components/Mentor';
 import { AdminLogin } from './components/AdminLogin';
 import { AdminDashboard } from './components/AdminDashboard';
 import { Navigation } from './components/Navigation';
@@ -31,6 +32,7 @@ type Page =
   | 'blog-post'
   | 'gallery'
   | 'contact'
+  | 'mentor'
   | 'admin-login'
   | 'admin-dashboard';
 
@@ -95,6 +97,8 @@ export default function App() {
         return <Gallery />;
       case 'contact':
         return <Contact />;
+      case 'mentor':
+        return <Mentor />;
       case 'admin-login':
         return <AdminLogin onLogin={handleLogin} />;
       case 'admin-dashboard':

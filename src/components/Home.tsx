@@ -76,7 +76,7 @@ export function Home({ onNavigate }: HomeProps) {
   return (
     <div className="w-full ">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen mb-16 flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-blue-600/85 z-10" />
         <div className="absolute inset-0 z-0">
           <ImageWithFallback

@@ -43,6 +43,8 @@ export function Navigation({ currentPage, onNavigate, isAdmin, onLogout }: Navig
     },
     { label: 'Blog', page: 'blog' },
     { label: 'Gallery', page: 'gallery' },
+    { label: 'Books', page: 'books', external: true, url: 'https://selar.com/m/oduyeboolusegunjoseph' },
+    { label: 'Mentor', page: 'mentor' },
     { label: 'Contact', page: 'contact' },
   ];
 
@@ -88,6 +90,15 @@ export function Navigation({ currentPage, onNavigate, isAdmin, onLogout }: Navig
                       ))}
                     </div>
                   </>
+                ) : item.external ? (
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-2 rounded-md transition-colors hover:bg-gray-100"
+                  >
+                    {item.label}
+                  </a>
                 ) : (
                   <button
                     onClick={() => onNavigate(item.page)}
@@ -190,6 +201,16 @@ export function Navigation({ currentPage, onNavigate, isAdmin, onLogout }: Navig
                       </div>
                     )}
                   </>
+                ) : item.external ? (
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block w-full text-left px-3 py-2 rounded-md hover:bg-gray-100"
+                  >
+                    {item.label}
+                  </a>
                 ) : (
                   <button
                     onClick={() => {
