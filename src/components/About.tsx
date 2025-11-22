@@ -1,6 +1,17 @@
 import { Target, History as HistoryIcon, Users as UsersIcon, Handshake } from 'lucide-react';
 import { Card, CardContent } from './ui/card';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+const SegunImg = new URL('./assets/segunoduyebo.JPG', import.meta.url).href;
+const AdeolaImg = new URL('./assets/AdeolaOduyebo.jpg', import.meta.url).href;
+const FavourImg = new URL('./assets/favourdavid.jpg', import.meta.url).href;
+const BibilariImg = new URL('./assets/Bibilariadewusi.jpg', import.meta.url).href;
+const AyoImg = new URL('./assets/AyoOlubiyi.jpg', import.meta.url).href;
+const AbimbolaImg = new URL('./assets/AbimbolaOlubiyi.jpg', import.meta.url).href;
+const OluseyiImg = new URL('./assets/Oluseyi.jpg', import.meta.url).href;
+const JamesonImg = new URL('./assets/jamesonochie.jpg', import.meta.url).href;
+const SarahOnchieImg = new URL('./assets/SarahOnochie.jpg', import.meta.url).href;
+const IgeImg = new URL('./assets/Ige.jpg', import.meta.url).href;
+const GenericImg = new URL('./assets/b0f7b827-92dc-471f-925a-c43989c47a0f.jpg', import.meta.url).href;
 
 interface AboutProps {
   section: string;
@@ -238,45 +249,40 @@ function History() {
 
 function Team() {
   const teamMembers = [
-    { name: 'Segun Oduyebo', role: 'President', description: 'Visionary leader driving DDI\'s mission to empower youth and communities', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=400&fit=crop' },
-    { name: 'Adeola Oduyebo', role: 'Vice President', description: 'Strategic oversight of programs and partnerships across all operations', image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=400&fit=crop' },
-    { name: 'Favour Davids', role: 'Corporate Administrator', description: 'Managing organizational operations and human resources', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&h=400&fit=crop' },
-    { name: 'Operations Manager', role: 'Operations Manager', description: 'Coordinating day-to-day activities and program implementation', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=400&fit=crop' },
-    { name: 'Account Manager', role: 'Account Manager', description: 'Managing financial operations and budget tracking', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=400&fit=crop' },
-    { name: 'Programs Director', role: 'Programs Director', description: 'Leading program design and implementation strategies', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=400&fit=crop' },
-    { name: 'Public Relations Manager', role: 'Public Relations Manager', description: 'Managing communications and public engagement', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&h=400&fit=crop' },
-    { name: 'Youth Empowerment Manager', role: 'Program Manager', description: 'Leading youth empowerment and economic development programs', image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300&h=400&fit=crop' },
-    { name: 'Education Manager', role: 'Program Manager', description: 'Overseeing education promotion and scholarship programs', image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&h=400&fit=crop' },
-    { name: 'Health Manager', role: 'Program Manager', description: 'Managing preventive and curative health programs', image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&h=400&fit=crop' },
-    { name: 'Human Rights Manager', role: 'Program Manager', description: 'Leading human rights and good governance initiatives', image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&h=400&fit=crop' },
-    { name: 'ICT Manager', role: 'ICT Manager', description: 'Managing technology infrastructure and digital empowerment', image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300&h=400&fit=crop' },
-    { name: 'Communications Officer', role: 'Communications', description: 'Handling internal and external communications', image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=300&h=400&fit=crop' },
-    { name: 'Social Media Handler', role: 'Social Media', description: 'Managing social media presence and digital engagement', image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&h=400&fit=crop' },
+    { name: 'Segun Oduyebo', role: 'President', image: SegunImg, description: 'Strategic leadership and vision' },
+    { name: 'Adeola Oduyebo', role: 'Vice President', image: AdeolaImg, description: 'Operations and program oversight' },
+    { name: 'Favour Davids', role: 'Corporate Administrator', image: FavourImg, description: 'Administration and finance' },
+    { name: 'Bibilari Adewusi', role: 'Program Director', image: BibilariImg, description: 'Program design and delivery' },
+    { name: 'Ayo Olubiyi', role: 'Community Outreach', image: AyoImg, description: 'Community engagement and partnerships' },
+    { name: 'Abimbola Olubiyi', role: 'Coordinator', image: AbimbolaImg, description: 'Volunteer coordination and logistics' },
+    { name: 'Oluseyi (Advisor)', role: 'Advisor', image: OluseyiImg, description: 'Advisory and strategy' },
+    { name: 'Jameson Ochie', role: 'Media Lead', image: JamesonImg, description: 'Media and communications' },
+    { name: 'Sarah Onochie', role: 'Field Officer', image: SarahOnchieImg, description: 'Field operations' },
+    { name: 'Ige', role: 'Technical', image: IgeImg, description: 'Technical support' },
+    { name: 'Team Member', role: 'Support', image: GenericImg, description: 'General support' },
   ];
 
   return (
     <div className="py-20 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl sm:text-5xl mb-6 font-extrabold text-blue-600">Our Leadership & Team</h1>
+        <h1 className="text-4xl sm:text-5xl mb-6 font-extrabold text-slate-900">Our Leadership & Team</h1>
 
         <p className="text-base text-slate-600 mb-12 max-w-3xl">
           DDI is powered by a dedicated team of professionals, volunteers, and community leaders committed to creating positive change.
         </p>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {teamMembers.map((member, index) => (
-            <div key={index} className="flex flex-col items-center group">
-              <div className="w-full h-64 bg-slate-200 rounded-lg mb-4 overflow-hidden group-hover:scale-105 transition-transform shadow-xl">
-                <ImageWithFallback
-                  src={member.image}
-                  alt={member.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <h3 className="text-lg font-bold text-slate-800 text-center">{member.name}</h3>
-              <p className="text-blue-600 font-semibold mb-2 text-center text-sm">{member.role}</p>
-              <p className="text-slate-600 text-center text-xs leading-relaxed">{member.description}</p>
-            </div>
+            <Card key={index} className="transform hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 overflow-hidden">
+              <CardContent className="p-4">
+                <div className="w-full h-44 mb-4 rounded-md overflow-hidden bg-slate-100">
+                  <ImageWithFallback src={member.image} alt={member.name} className="w-full h-full object-cover" />
+                </div>
+                <h3 className="text-lg font-semibold mb-1 text-slate-900">{member.name}</h3>
+                <div className="text-indigo-700 mb-2 font-medium">{member.role}</div>
+                <p className="text-slate-600 text-sm">{member.description}</p>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>

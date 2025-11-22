@@ -3,6 +3,12 @@ import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
+const SegunImg = new URL('./assets/segunoduyebo.JPG', import.meta.url).href;
+const AdeolaImg = new URL('./assets/AdeolaOduyebo.jpg', import.meta.url).href;
+const FavourImg = new URL('./assets/favourdavid.jpg', import.meta.url).href;
+const BibilariImg = new URL('./assets/Bibilariadewusi.jpg', import.meta.url).href;
+const AyoImg = new URL('./assets/AyoOlubiyi.jpg', import.meta.url).href;
+
 interface HomeProps {
   onNavigate: (page: string) => void;
 }
@@ -58,11 +64,11 @@ export function Home({ onNavigate }: HomeProps) {
   ];
 
   const team = [
-    { name: 'Segun Oduyebo', role: 'President', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=400&fit=crop' },
-    { name: 'Adeola Oduyebo', role: 'Vice President', image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=400&fit=crop' },
-    { name: 'Favour Davids', role: 'Corporate Administrator', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&h=400&fit=crop' },
-    { name: 'Michael Johnson', role: 'Program Director', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=400&fit=crop' },
-    { name: 'Sarah Williams', role: 'Community Outreach', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=400&fit=crop' },
+    { name: 'Segun Oduyebo', role: 'President', image: SegunImg },
+    { name: 'Adeola Oduyebo', role: 'Vice President', image: AdeolaImg },
+    { name: 'Favour Davids', role: 'Corporate Administrator', image: FavourImg },
+    { name: 'Bibilari Adewusi', role: 'Program Director', image: BibilariImg },
+    { name: 'Ayo Olubiyi', role: 'Community Outreach', image: AyoImg },
   ];
 
   const faqs = [
@@ -311,17 +317,17 @@ export function Home({ onNavigate }: HomeProps) {
             </p>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-start">
             {team.map((member, index) => (
-              <div key={index} className="flex flex-col items-center group">
-                <div className="w-48 h-64 bg-slate-200 rounded-lg mb-6 overflow-hidden group-hover:scale-105 transition-transform shadow-xl">
+              <div key={index} className="flex flex-col items-center text-center group">
+                <div className="w-48 h-64 bg-slate-200 rounded-lg mb-4 overflow-hidden group-hover:scale-105 transition-transform shadow-xl">
                   <ImageWithFallback
                     src={member.image}
                     alt={member.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-800">{member.name}</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-800">{member.name}</h3>
                 <p className="text-blue-600 font-semibold">{member.role}</p>
               </div>
             ))}
