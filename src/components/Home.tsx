@@ -2,6 +2,7 @@ import { ArrowRight, Users, BookOpen, Briefcase, Film, Heart, TrendingUp, Target
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { useEffect } from 'react';
 
 const SegunImg = new URL('./assets/segunoduyebo.JPG', import.meta.url).href;
 const AdeolaImg = new URL('./assets/AdeolaOduyebo.jpg', import.meta.url).href;
@@ -78,6 +79,18 @@ export function Home({ onNavigate }: HomeProps) {
     { question: 'Do you provide scholarships or financial support?', answer: 'Yes, we have provided over 100 scholarships to deserving students. Our financial support programs are designed to help individuals access education and opportunities that enable them to reach their full potential.' },
     { question: 'How do I contact Destiny Development Initiative?', answer: 'You can contact us through the contact form on our website, or reach out via email or phone. Visit our Contact page for detailed information on how to get in touch with our team.' },
   ];
+
+  // initialize ads when component mounts (client-side only)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        (window as any).adsbygoogle = (window as any).adsbygoogle || [];
+        (window as any).adsbygoogle.push({});
+      } catch (e) {
+        // ignore errors during development or if ads blocked
+      }
+    }
+  }, []);
 
   return (
     <div className="w-full ">
@@ -188,6 +201,20 @@ export function Home({ onNavigate }: HomeProps) {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* AdSense - Responsive ad unit */}
+      <section className="py-8 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center">
+            <ins className="adsbygoogle block"
+              style={{ display: 'block' }}
+              data-ad-client="ca-pub-2599502659739282"
+              data-ad-slot="1234567890"
+              data-ad-format="auto"
+              data-full-width-responsive="true"></ins>
           </div>
         </div>
       </section>

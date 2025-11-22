@@ -22,6 +22,15 @@ export function Blog({ onNavigate, onSelectPost }: BlogProps) {
   useEffect(() => {
     fetchPosts();
     trackPageView();
+    // initialize AdSense (client-side only)
+    if (typeof window !== 'undefined') {
+      try {
+        (window as any).adsbygoogle = (window as any).adsbygoogle || [];
+        (window as any).adsbygoogle.push({});
+      } catch (e) {
+        // ignore if ads blocked or not yet available
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -175,6 +184,18 @@ export function Blog({ onNavigate, onSelectPost }: BlogProps) {
             ))}
           </div>
         )}
+
+        {/* AdSense - Blog responsive ad */}
+        <div className="py-8">
+          <div className="flex justify-center">
+            <ins className="adsbygoogle block"
+              style={{ display: 'block' }}
+              data-ad-client="ca-pub-2599502659739282"
+              data-ad-slot="1234567891"
+              data-ad-format="auto"
+              data-full-width-responsive="true"></ins>
+          </div>
+        </div>
       </div>
     </div>
   );
