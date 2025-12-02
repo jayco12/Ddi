@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Menu, X, ChevronDown, LogOut } from 'lucide-react';
 import { Button } from './ui/button';
+import { ThemeToggle } from './ThemeToggle';
 
 interface NavigationProps {
   currentPage: string;
@@ -49,7 +50,7 @@ export function Navigation({ currentPage, onNavigate, isAdmin, onLogout }: Navig
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+    <nav className="sticky top-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -70,12 +71,12 @@ export function Navigation({ currentPage, onNavigate, isAdmin, onLogout }: Navig
                   <>
                     <button
                       onClick={() => onNavigate(item.page)}
-                      className="flex items-center gap-1 px-3 py-2 rounded-md hover:bg-gray-100 transition-colors"
+                      className="flex items-center gap-1 px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                     >
                       {item.label}
                       <ChevronDown className="w-4 h-4" />
                     </button>
-                    <div className="absolute left-0 mt-1 w-56 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <div className="absolute left-0 mt-1 w-56 bg-white dark:bg-gray-900 rounded-lg shadow-lg border border-gray-200 dark:border-gray-800 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
                       {item.dropdown.map((subItem) => (
                         <button
                           key={subItem.page}
@@ -83,7 +84,7 @@ export function Navigation({ currentPage, onNavigate, isAdmin, onLogout }: Navig
                             onNavigate(subItem.page);
                             setMobileMenuOpen(false);
                           }}
-                          className="block w-full text-left px-4 py-2 hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg"
+                          className="block w-full text-left px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-800 first:rounded-t-lg last:rounded-b-lg"
                         >
                           {subItem.label}
                         </button>
@@ -95,7 +96,7 @@ export function Navigation({ currentPage, onNavigate, isAdmin, onLogout }: Navig
                     href={item.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-3 py-2 rounded-md transition-colors hover:bg-gray-100"
+                    className="px-3 py-2 rounded-md transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
                   >
                     {item.label}
                   </a>
@@ -104,8 +105,8 @@ export function Navigation({ currentPage, onNavigate, isAdmin, onLogout }: Navig
                     onClick={() => onNavigate(item.page)}
                     className={`px-3 py-2 rounded-md transition-colors ${
                       currentPage === item.page
-                        ? 'bg-blue-50 text-blue-600'
-                        : 'hover:bg-gray-100'
+                        ? 'bg-blue-50 text-blue-600 dark:bg-blue-900 dark:text-white'
+                        : 'hover:bg-gray-100 dark:hover:bg-gray-800'
                     }`}
                   >
                     {item.label}
@@ -114,6 +115,8 @@ export function Navigation({ currentPage, onNavigate, isAdmin, onLogout }: Navig
               </div>
             ))}
             
+            <ThemeToggle />
+
             {isAdmin ? (
               <div className="flex items-center gap-2 ml-4">
                 <Button
@@ -146,7 +149,7 @@ export function Navigation({ currentPage, onNavigate, isAdmin, onLogout }: Navig
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-md hover:bg-gray-100"
+            className="lg:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -155,7 +158,7 @@ export function Navigation({ currentPage, onNavigate, isAdmin, onLogout }: Navig
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-gray-200 bg-white">
+        <div className="lg:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
           <div className="px-4 py-2 space-y-1">
             {menuItems.map((item) => (
               <div key={item.page}>
@@ -169,7 +172,7 @@ export function Navigation({ currentPage, onNavigate, isAdmin, onLogout }: Navig
                           setProgramsDropdownOpen(!programsDropdownOpen);
                         }
                       }}
-                      className="flex items-center justify-between w-full px-3 py-2 rounded-md hover:bg-gray-100"
+                      className="flex items-center justify-between w-full px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
                     >
                       {item.label}
                       <ChevronDown 
@@ -193,7 +196,7 @@ export function Navigation({ currentPage, onNavigate, isAdmin, onLogout }: Navig
                               setAboutDropdownOpen(false);
                               setProgramsDropdownOpen(false);
                             }}
-                            className="block w-full text-left px-3 py-2 rounded-md hover:bg-gray-50"
+                            className="block w-full text-left px-3 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800"
                           >
                             {subItem.label}
                           </button>
@@ -207,7 +210,7 @@ export function Navigation({ currentPage, onNavigate, isAdmin, onLogout }: Navig
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block w-full text-left px-3 py-2 rounded-md hover:bg-gray-100"
+                    className="block w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
                   >
                     {item.label}
                   </a>
@@ -219,8 +222,8 @@ export function Navigation({ currentPage, onNavigate, isAdmin, onLogout }: Navig
                     }}
                     className={`block w-full text-left px-3 py-2 rounded-md ${
                       currentPage === item.page
-                        ? 'bg-blue-50 text-blue-600'
-                        : 'hover:bg-gray-100'
+                        ? 'bg-blue-50 text-blue-600 dark:bg-blue-900 dark:text-white'
+                        : 'hover:bg-gray-100 dark:hover:bg-gray-800'
                     }`}
                   >
                     {item.label}
@@ -229,14 +232,18 @@ export function Navigation({ currentPage, onNavigate, isAdmin, onLogout }: Navig
               </div>
             ))}
             
+            <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
+                <ThemeToggle />
+            </div>
+
             {isAdmin ? (
-              <div className="pt-4 border-t border-gray-200 space-y-1">
+              <div className="pt-4 border-t border-gray-200 dark:border-gray-800 space-y-1">
                 <button
                   onClick={() => {
                     onNavigate('admin-dashboard');
                     setMobileMenuOpen(false);
                   }}
-                  className="block w-full text-left px-3 py-2 rounded-md hover:bg-gray-100"
+                  className="block w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
                   Dashboard
                 </button>
@@ -245,7 +252,7 @@ export function Navigation({ currentPage, onNavigate, isAdmin, onLogout }: Navig
                     onLogout();
                     setMobileMenuOpen(false);
                   }}
-                  className="flex items-center gap-2 w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 text-red-600"
+                  className="flex items-center gap-2 w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-red-600"
                 >
                   <LogOut className="w-4 h-4" />
                   Logout
@@ -257,7 +264,7 @@ export function Navigation({ currentPage, onNavigate, isAdmin, onLogout }: Navig
                   onNavigate('admin-login');
                   setMobileMenuOpen(false);
                 }}
-                className="block w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 mt-2 border-t border-gray-200 pt-4"
+                className="block w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 mt-2 border-t border-gray-200 dark:border-gray-800 pt-4"
               >
                 Admin Login
               </button>
