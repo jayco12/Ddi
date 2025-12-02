@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   LayoutDashboard, 
   FileText, 
@@ -8,7 +8,11 @@ import {
   Plus,
   Trash2,
   Eye,
-  Edit
+  Edit,
+  Users,
+  Calendar,
+  UserPlus,
+  Check
 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
@@ -43,15 +47,57 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
   // Gallery form state
   const [galleryTitle, setGalleryTitle] = useState('');
   const [galleryCategory, setGalleryCategory] = useState('');
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  // Instead of hosting images via file uploads, accept image URLs
+  const [galleryImageUrl, setGalleryImageUrl] = useState('');
+
+  // Events & attendance
+  const [events, setEvents] = useState<any[]>([]);
+  const [newEventName, setNewEventName] = useState('');
+  const [newEventDate, setNewEventDate] = useState('');
+  const [attendanceName, setAttendanceName] = useState('');
+  const [attendanceCount, setAttendanceCount] = useState<number>(1);
+
+  // Mentors & mentees
+  const [mentorSubmissions, setMentorSubmissions] = useState<any[]>([]); // pending mentor form submissions
+  const [mentors, setMentors] = useState<any[]>([]); // approved mentors
+  const [newMenteeName, setNewMenteeName] = useState('');
+  const [newMenteeAssignedMentor, setNewMenteeAssignedMentor] = useState<string | null>(null);
+  const [mentees, setMentees] = useState<any[]>([]);
+  const [selectedMentor, setSelectedMentor] = useState<any | null>(null);
+
+  // Debug / server response
+  const [serverDebug, setServerDebug] = useState<string | null>(null);
 
   const serverUrl = `https://${projectId}.supabase.co/functions/v1/make-server-c6a73d4f`;
+  const restBase = `https://${projectId}.supabase.co/rest/v1`;
+
+  // Helper to call Supabase PostgREST endpoints
+  const restFetch = async (path: string, opts: { method?: string; body?: any; useAccess?: boolean; preferReturn?: boolean } = {}) => {
+    const url = `${restBase}${path}`;
+    const headers: Record<string, string> = {
+      'apikey': publicAnonKey,
+      'Accept': 'application/json'
+    };
+    // Use admin accessToken for writes where available
+    headers['Authorization'] = opts.useAccess ? `Bearer ${accessToken}` : `Bearer ${publicAnonKey}`;
+    if (opts.body) headers['Content-Type'] = 'application/json';
+    if (opts.preferReturn) headers['Prefer'] = 'return=representation';
+
+    const res = await fetch(url, { method: opts.method || 'GET', headers, body: opts.body ? JSON.stringify(opts.body) : undefined });
+    const text = await res.text();
+    if (!res.ok) throw new Error(`${res.status} ${res.statusText}: ${text}`);
+    try { return JSON.parse(text); } catch { return text; }
+  };
 
   useEffect(() => {
     fetchAnalytics();
     fetchBlogPosts();
     fetchGalleryImages();
     fetchContactSubmissions();
+    fetchEvents();
+    fetchMentorSubmissions();
+    fetchApprovedMentors();
+    fetchMentees();
   }, []);
 
   const fetchAnalytics = async () => {
@@ -118,6 +164,172 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
     }
   };
 
+  // Fetch events via PostgREST
+  const fetchEvents = async () => {
+    try {
+      const data = await restFetch('/events');
+      const eventsArr = Array.isArray(data) ? data : [];
+      // populate attendance counts per event
+      const withCounts = await Promise.all(eventsArr.map(async (ev: any) => {
+        try {
+          const att = await restFetch(`/event_attendance?event_id=eq.${encodeURIComponent(ev.id)}&select=id`);
+          const count = Array.isArray(att) ? att.length : 0;
+          return { ...ev, attendanceCount: count };
+        } catch (err) {
+          return { ...ev, attendanceCount: 0 };
+        }
+      }));
+      setEvents(withCounts);
+    } catch (e) {
+      console.error('Error fetching events', e);
+      setEvents([]);
+    }
+  };
+
+  const createEvent = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newEventName || !newEventDate) return alert('Please enter event name and date');
+    try {
+      setLoading(true);
+      // Use PostgREST to create event
+      try {
+        await restFetch('/events', { method: 'POST', body: { title: newEventName, date: newEventDate }, useAccess: true, preferReturn: true });
+        setNewEventName('');
+        setNewEventDate('');
+        fetchEvents();
+      } catch (err: any) {
+        setServerDebug(`REST POST /events error: ${String(err.message || err)}`);
+        alert('Failed to create event. See debug panel.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error creating event');
+    } finally { setLoading(false); }
+  };
+
+  const markAttendance = async (eventId: string) => {
+    // Allow anonymous attendance entries (name optional). We send null when name is blank.
+    try {
+      setLoading(true);
+      try {
+        await restFetch('/event_attendance', { method: 'POST', body: { event_id: eventId, name: attendanceName || null, created_at: new Date().toISOString() }, useAccess: true, preferReturn: true });
+        setAttendanceName('');
+        fetchEvents();
+      } catch (err: any) {
+        setServerDebug(`REST POST /event_attendance error: ${String(err.message || err)}`);
+        alert('Failed to mark attendance. See debug panel.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error marking attendance');
+    } finally { setLoading(false); }
+  };
+
+  // Bulk add anonymous attendees by number
+  const addAttendanceCount = async (eventId: string, count: number) => {
+    if (!count || count <= 0) return alert('Enter a valid number');
+    try {
+      setLoading(true);
+      // Build array of attendance entries (name null) to insert in one request
+      const now = new Date().toISOString();
+      const payload = Array.from({ length: count }).map(() => ({ event_id: eventId, name: null, created_at: now }));
+      try {
+        await restFetch('/event_attendance', { method: 'POST', body: payload, useAccess: true, preferReturn: true });
+        setAttendanceCount(1);
+        fetchEvents();
+      } catch (err: any) {
+        setServerDebug(`REST bulk POST /event_attendance error: ${String(err.message || err)}`);
+        alert('Failed to add attendance count. See debug panel.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error adding attendance count');
+    } finally { setLoading(false); }
+  };
+
+  // Mentor workflow
+  const fetchMentorSubmissions = async () => {
+    try {
+      const data = await restFetch('/mentor_submissions', { useAccess: true });
+      setMentorSubmissions(Array.isArray(data) ? data : []);
+    } catch (err) { console.error(err); setServerDebug(`Error fetching mentor submissions: ${String(err)}`); }
+  };
+
+  const approveMentor = async (submissionId: string) => {
+    try {
+      // Read the submission
+      const subs = await restFetch(`/mentor_submissions?id=eq.${encodeURIComponent(submissionId)}`, { useAccess: true });
+      const submission = Array.isArray(subs) && subs[0];
+      if (!submission) throw new Error('Submission not found');
+      // Insert into mentors table
+      await restFetch('/mentors', { method: 'POST', body: { fullName: submission.fullName, email: submission.email,phone: submission.phone,age: submission.age, occupation: submission.occupation,experience: submission.experience,education: submission.education, motivation: submission.motivation,skills: submission.skills,availability: submission.availability, approved: true }, useAccess: true, preferReturn: true });
+      // Delete the submission
+      const delRes = await fetch(`${restBase}/mentor_submissions?id=eq.${encodeURIComponent(submissionId)}`, { method: 'DELETE', headers: { 'apikey': publicAnonKey, 'Authorization': `Bearer ${accessToken}` } });
+      if (!delRes.ok) throw new Error(`Failed to delete submission ${await delRes.text()}`);
+      fetchMentorSubmissions();
+      fetchApprovedMentors();
+    } catch (err) { console.error(err); setServerDebug(`Error approving mentor: ${String(err)}`); }
+  };
+
+  const fetchApprovedMentors = async () => {
+    try {
+      const data = await restFetch('/mentors');
+      setMentors(Array.isArray(data) ? data : []);
+    } catch (err) { console.error(err); setServerDebug(`Error fetching approved mentors: ${String(err)}`); }
+  };
+
+  const createMentee = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newMenteeName || !newMenteeAssignedMentor) return alert('Provide mentee name and assign a mentor');
+    try {
+      setLoading(true);
+      try {
+        await restFetch('/mentees', { method: 'POST', body: { name: newMenteeName, mentor_id: newMenteeAssignedMentor }, useAccess: true, preferReturn: true });
+        setNewMenteeName('');
+        setNewMenteeAssignedMentor(null);
+        alert('Mentee added');
+        fetchMentees();
+      } catch (err: any) {
+        setServerDebug(`REST POST /mentees error: ${String(err.message || err)}`);
+        alert('Failed to add mentee. See debug panel.');
+      }
+    } catch (err) { console.error(err); alert('Error adding mentee'); }
+    finally { setLoading(false); }
+  };
+
+  // Fetch mentees
+  const fetchMentees = async () => {
+    try {
+      const data = await restFetch('/mentees', { useAccess: true });
+      setMentees(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error('Error fetching mentees', err);
+      setMentees([]);
+    }
+  };
+
+  // Export attendance for an event as CSV
+  const exportAttendance = async (eventId: string, eventTitle?: string) => {
+    try {
+      const data = await restFetch(`/event_attendance?event_id=eq.${encodeURIComponent(eventId)}&select=name,created_at`, { useAccess: true });
+      const rows = Array.isArray(data) ? data : [];
+      const csv = [ ['name','created_at'], ...rows.map((r: any) => [r.name, r.created_at]) ].map(r => r.map((c: any) => `"${String(c || '')}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${(eventTitle || eventId).replace(/[^a-z0-9_\-]/gi, '_')}_attendance.csv`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error('Error exporting attendance', err);
+      setServerDebug(`Export attendance error: ${String(err)}`);
+      alert('Failed to export attendance');
+    }
+  };
+
   const handleCreateOrUpdatePost = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -144,8 +356,16 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
         })
       });
 
-      const data = await response.json();
-      
+      const text = await response.text();
+      if (!response.ok) {
+        setServerDebug(`${method} ${url} ${response.status}: ${text}`);
+        alert('Failed to save post. See debug panel.');
+        return;
+      }
+
+      let data: any = {};
+      try { data = text ? JSON.parse(text) : {}; } catch (err) { data = {}; }
+
       if (data.success) {
         alert(editingPostId ? 'Post updated successfully!' : 'Post created successfully!');
         setBlogTitle('');
@@ -156,7 +376,8 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
         setEditingPostId(null);
         fetchBlogPosts();
       } else {
-        alert('Error: ' + (data.error || 'Failed to save post'));
+        setServerDebug(`Blog save error: ${JSON.stringify(data)}`);
+        alert('Error saving post. See debug panel.');
       }
     } catch (error) {
       console.error('Error saving blog post:', error);
@@ -199,71 +420,78 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
     setActiveTab('blog');
   };
 
+  // Create gallery image by URL (no file hosting)
   const handleUploadImage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedFile) return;
+    if (!galleryImageUrl) return alert('Provide an image URL');
 
     setLoading(true);
-
     try {
-      const formData = new FormData();
-      formData.append('file', selectedFile);
-      formData.append('title', galleryTitle);
-      formData.append('category', galleryCategory);
-
-      const response = await fetch(`${serverUrl}/gallery/upload`, {
+      const response = await fetch(`${serverUrl}/gallery/images`, {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
-        },
-        body: formData
+        headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: galleryImageUrl, title: galleryTitle, category: galleryCategory })
       });
-
-      const data = await response.json();
-      
+      const text = await response.text();
+      if (!response.ok) {
+        setServerDebug(`POST /gallery/images ${response.status}: ${text}`);
+        alert('Failed to add gallery image. See debug panel.');
+        return;
+      }
+      let data: any = {};
+      try { data = text ? JSON.parse(text) : {}; } catch (err) { data = {}; }
       if (data.success) {
-        alert('Image uploaded successfully!');
+        alert('Image added to gallery!');
         setGalleryTitle('');
         setGalleryCategory('');
-        setSelectedFile(null);
+        setGalleryImageUrl('');
         fetchGalleryImages();
       } else {
-        alert('Error: ' + (data.error || 'Failed to upload image'));
+        setServerDebug(`Gallery add error: ${JSON.stringify(data)}`);
+        alert('Error adding image. See debug panel.');
       }
-    } catch (error) {
-      console.error('Error uploading image:', error);
-      alert('Error uploading image');
-    } finally {
-      setLoading(false);
-    }
+    } catch (err) {
+      console.error('Error adding gallery image:', err);
+      alert('Error adding gallery image');
+    } finally { setLoading(false); }
   };
 
   const handleDeleteImage = async (imageId: string) => {
     if (!confirm('Are you sure you want to delete this image?')) return;
-
     try {
       const response = await fetch(`${serverUrl}/gallery/images/${imageId}`, {
         method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
-        }
+        headers: { 'Authorization': `Bearer ${accessToken}` }
       });
-
-      const data = await response.json();
-      
+      const text = await response.text();
+      if (!response.ok) {
+        setServerDebug(`DELETE /gallery/images/${imageId} ${response.status}: ${text}`);
+        alert('Failed to delete image. See debug panel.');
+        return;
+      }
+      let data: any = {};
+      try { data = text ? JSON.parse(text) : {}; } catch (err) { data = {}; }
       if (data.success) {
         alert('Image deleted successfully!');
         fetchGalleryImages();
+      } else {
+        setServerDebug(`DELETE image error: ${JSON.stringify(data)}`);
+        alert('Failed to delete image. See debug panel.');
       }
-    } catch (error) {
-      console.error('Error deleting image:', error);
-      alert('Error deleting image');
-    }
+    } catch (err) { console.error(err); alert('Error deleting image'); }
   };
 
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {serverDebug && (
+          <div className="mb-4 p-4 bg-red-50 border border-red-200 text-red-800 rounded-md">
+            <div className="flex justify-between items-start">
+              <div className="whitespace-pre-wrap text-sm">{serverDebug}</div>
+              <button onClick={() => setServerDebug(null)} className="ml-4 text-sm text-red-600">Dismiss</button>
+            </div>
+          </div>
+        )}
         <div className="mb-8">
           <h1 className="text-3xl mb-2">Admin Dashboard</h1>
           <p className="text-gray-600">Manage your DDI website content and view insights</p>
@@ -291,7 +519,19 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
               <Mail className="w-4 h-4 mr-2" />
               Contact
             </TabsTrigger>
-          </TabsList>
+            <TabsTrigger value="events">
+              <Calendar className="w-4 h-4 mr-2" />
+              Events
+            </TabsTrigger>
+            <TabsTrigger value="mentors">
+              <Users className="w-4 h-4 mr-2" />
+              Mentors
+            </TabsTrigger>
+            <TabsTrigger value="mentees">
+              <UserPlus className="w-4 h-4 mr-2" />
+              Mentees
+            </TabsTrigger>
+           </TabsList>
 
           {/* Overview Tab */}
           <TabsContent value="overview">
@@ -516,18 +756,18 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="file">Image File</Label>
+                      <Label htmlFor="image-url">Image URL</Label>
                       <Input
-                        id="file"
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+                        id="image-url"
+                        value={galleryImageUrl}
+                        onChange={(e) => setGalleryImageUrl(e.target.value)}
+                        placeholder="https://..."
                         required
                       />
                     </div>
-                    <Button type="submit" disabled={loading || !selectedFile}>
+                    <Button type="submit" disabled={loading || !galleryImageUrl}>
                       <Plus className="w-4 h-4 mr-2" />
-                      Upload Image
+                      Add Image to Gallery
                     </Button>
                   </form>
                 </CardContent>
@@ -624,6 +864,156 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
               </CardContent>
             </Card>
           </TabsContent>
+
+          {/* Events Tab */}
+          <TabsContent value="events">
+            <div className="grid lg:grid-cols-2 gap-8">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Create Event</CardTitle>
+                  <CardDescription>Add an event for tracking attendance and metrics</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <form onSubmit={createEvent} className="space-y-4">
+                    <div>
+                      <Label htmlFor="event-name">Event Name</Label>
+                      <Input id="event-name" value={newEventName} onChange={(e) => setNewEventName(e.target.value)} required />
+                    </div>
+                    <div>
+                      <Label htmlFor="event-date">Date</Label>
+                      <Input id="event-date" type="date" value={newEventDate} onChange={(e) => setNewEventDate(e.target.value)} required />
+                    </div>
+                    <div className="flex gap-2">
+                      <Button type="submit" disabled={loading}><Plus className="w-4 h-4 mr-2" />Create Event</Button>
+                    </div>
+                  </form>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Events & Attendance</CardTitle>
+                  <CardDescription>Mark attendance and view metrics</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {events.map((ev: any) => (
+                      <div key={ev.id} className="border rounded-lg p-3">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <div className="font-semibold">{ev.title}</div>
+                            <div className="text-sm text-gray-600">{new Date(ev.date).toLocaleDateString()}</div>
+                          </div>
+                          <div className="text-sm text-gray-700">Attendees: {ev.attendanceCount || 0}</div>
+                        </div>
+                        <div className="mt-3 grid grid-cols-1 sm:grid-cols-4 gap-2 items-center">
+                          <Input placeholder="Attendee name (optional)" value={attendanceName} onChange={(e) => setAttendanceName(e.target.value)} />
+                          <Button onClick={() => markAttendance(ev.id)}><Check className="w-4 h-4 mr-2" />Mark Attendance</Button>
+                          <div className="flex items-center gap-2">
+                            <Input type="number" min={1} value={attendanceCount} onChange={(e) => setAttendanceCount(Number(e.target.value || 1))} className="w-24" />
+                            <Button variant="outline" onClick={() => addAttendanceCount(ev.id, attendanceCount)}>Add Count</Button>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button variant="outline" onClick={() => { navigator.clipboard?.writeText(ev.id); alert('Event ID copied'); }}>Copy ID</Button>
+                            <Button variant="outline" onClick={() => exportAttendance(ev.id, ev.title)}>Export Attendance</Button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    {events.length === 0 && <div className="text-gray-600">No events yet</div>}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          {/* Mentors Tab */}
+          <TabsContent value="mentors">
+            <div className="grid lg:grid-cols-2 gap-8">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Mentor Submissions</CardTitle>
+                  <CardDescription>Review mentor sign-ups and approve</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {mentorSubmissions.map((m) => (
+                      <div key={m.id} className="border rounded-lg p-3">
+                        <div className="flex justify-between">
+                          <div>
+                            <div className="font-semibold">{m.name}</div>
+                            <div className="text-sm text-gray-600">{m.email}</div>
+                            <div className="text-sm mt-1">{m.bio || ''}</div>
+                          </div>
+                          <div className="flex flex-col gap-2">
+                            <Button size="sm" onClick={() => approveMentor(m.id)}><Check className="w-4 h-4 mr-1" />Approve</Button>
+                            <Button size="sm" variant="outline" onClick={async () => { await fetch(`${serverUrl}/mentors/submissions/${m.id}/reject`, { method: 'POST', headers: { 'Authorization': `Bearer ${accessToken}` } }); fetchMentorSubmissions(); }}>Reject</Button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    {mentorSubmissions.length === 0 && <div className="text-gray-600">No pending submissions</div>}
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Approved Mentors</CardTitle>
+                  <CardDescription>Mentors available to assign</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3 max-h-[600px] overflow-y-auto">
+                    {mentors.map((mt) => (
+                      <div key={mt.id} className="flex items-center justify-between border-b py-2">
+                        <div>
+                          <div className="font-semibold">{mt.name || mt.fullName}</div>
+                          <div className="text-sm text-gray-600">{mt.email}</div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="text-sm text-gray-700">{mt.specialty || ''}</div>
+                          <Button size="sm" variant="outline" onClick={() => setSelectedMentor(mt)}><Eye className="w-4 h-4 mr-1" />View</Button>
+                        </div>
+                      </div>
+                    ))}
+                    {mentors.length === 0 && <div className="text-gray-600">No approved mentors</div>}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          {/* Mentor detail modal */}
+          {selectedMentor && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+              <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4">
+                <div className="p-6 border-b flex justify-between items-start">
+                  <div>
+                    <h3 className="text-xl font-bold">{selectedMentor.name || selectedMentor.fullName}</h3>
+                    <div className="text-sm text-gray-600">{selectedMentor.email}</div>
+                  </div>
+                  <div className="ml-4">
+                    <Button variant="ghost" onClick={() => setSelectedMentor(null)}>Close</Button>
+                  </div>
+                </div>
+                <div className="p-6 space-y-3">
+                  <div><strong>Phone:</strong> {selectedMentor.phone || '—'}</div>
+                  <div><strong>Age:</strong> {selectedMentor.age || '—'}</div>
+                  <div><strong>Occupation:</strong> {selectedMentor.occupation || '—'}</div>
+                  <div><strong>Education:</strong> {selectedMentor.education || '—'}</div>
+                  <div><strong>Specialty:</strong> {selectedMentor.specialty || '—'}</div>
+                  <div><strong>Availability:</strong> {selectedMentor.availability || '—'}</div>
+                  <div><strong>Skills:</strong> <div className="text-sm text-gray-700 whitespace-pre-wrap">{selectedMentor.skills || selectedMentor.bio || '—'}</div></div>
+                  <div><strong>Experience / Bio:</strong> <div className="text-sm text-gray-700 whitespace-pre-wrap">{selectedMentor.experience || selectedMentor.bio || '—'}</div></div>
+                  <div><strong>Motivation:</strong> <div className="text-sm text-gray-700 whitespace-pre-wrap">{selectedMentor.motivation || '—'}</div></div>
+                  <div className="text-xs text-gray-500">Joined: {selectedMentor.created_at ? new Date(selectedMentor.created_at).toLocaleString() : '—'}</div>
+                </div>
+                <div className="p-4 border-t flex justify-end">
+                  <Button onClick={() => setSelectedMentor(null)}>Close</Button>
+                </div>
+              </div>
+            </div>
+          )}
         </Tabs>
       </div>
     </div>
