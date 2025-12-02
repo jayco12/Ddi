@@ -20,6 +20,9 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
   const [events, setEvents] = useState<any[]>([]);
   const [mentees, setMentees] = useState<any[]>([]);
   const [serverDebug, setServerDebug] = useState<string | null>(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  
+  console.log('Sidebar state:', sidebarOpen);
 
   const serverUrl = `https://${projectId}.supabase.co/functions/v1/make-server-c6a73d4f`;
   const restBase = `https://${projectId}.supabase.co/rest/v1`;
@@ -110,14 +113,26 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-950" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+    <div className="relative flex min-h-screen bg-gray-950" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
       <AdminSidebar 
         activeSection={activeSection} 
         onSectionChange={setActiveSection} 
         isSuperAdmin={isSuperAdmin}
         onLogout={onLogout}
+        isOpen={sidebarOpen}
+        onToggle={() => setSidebarOpen(!sidebarOpen)}
       />
-      <div className="flex-1 p-8 overflow-auto">
+      {sidebarOpen && <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setSidebarOpen(false)} />}
+      <div className="flex-1 flex flex-col">
+        {!sidebarOpen && (
+          <button 
+            onClick={() => setSidebarOpen(true)} 
+            className="fixed top-20 left-4 z-[9999] p-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-all shadow-2xl"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+          </button>
+        )}
+        <div className="flex-1 p-8 overflow-auto">
         {serverDebug && (
           <div className="mb-4 p-4 bg-red-900/20 border border-red-500/30 text-red-400 rounded-md">
             <div className="flex justify-between items-start">
@@ -126,7 +141,8 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
             </div>
           </div>
         )}
-        {renderSection()}
+          {renderSection()}
+        </div>
       </div>
     </div>
   );
