@@ -49,78 +49,85 @@ export function Programs({ section, onNavigate }: ProgramsProps) {
 function ProgramsOverview({ onNavigate }: { onNavigate: (page: string) => void }) {
   const programs = [
     {
-      icon: Users,
       title: 'Youth Empowerment & Engagement',
-      description: 'Enterprise development, economic empowerment, education promotion, health for development, and good governance',
+      description: 'We implement enterprise development with special focus on Agriculture, ICT, Manufacturing, Trading and Fashion. Our programs equip, empower and organize youth aged 10-35 towards personal, economic and national development.',
       page: 'economic-empowerment',
-      color: 'bg-blue-600',
-      image: 'https://images.unsplash.com/photo-1759922378187-11a435837df8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx5b3V0aCUyMGVtcG93ZXJtZW50JTIwdHJhaW5pbmd8ZW58MXx8fHwxNzYzNDk1NzA4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral'
+      image: 'https://images.unsplash.com/photo-1759922378187-11a435837df8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx5b3V0aCUyMGVtcG93ZXJtZW50JTIwdHJhaW5pbmd8ZW58MXx8fHwxNzYzNDk1NzA4fDA&ixlib=rb-4.1.0&q=80&w=1080',
+      stats: ['10-35 Age Range', 'Enterprise Development', 'Economic Empowerment']
     },
     {
-      icon: Heart,
       title: 'Care and Support for OVC',
-      description: 'Providing care and support for 500 orphans and vulnerable children per annum through community mobilization',
+      description: 'Promoting the value of working together to assist Orphans and Vulnerable Children in our communities. We mobilize people to help one another and coordinate aid for the poor, the needy and orphans.',
       page: 'social-service',
-      color: 'bg-blue-600',
-      image: 'https://images.unsplash.com/photo-1761039808159-f02b58f07032?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBkZXZlbG9wbWVudCUyMGFmcmljYXxlbnwxfHx8fDE3NjM0OTU3MDh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral'
+      image: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1600&q=80',
+      stats: ['500+ Children Annually', 'Community Mobilization', 'Social Services']
     },
     {
-      icon: BookOpen,
-      title: 'Destiny Equip Mission (DEM)',
-      description: 'Raising young institution and nation builders through mentorship, training, and leadership development',
+      title: 'Destiny Equip Mission',
+      description: 'Raising young institution and nation builders through mentorship, training, and leadership development. We create enabling environments and provide resources that help people develop needed skills for efficient living.',
       page: 'education',
-      color: 'bg-blue-600',
-      image: 'https://images.unsplash.com/photo-1553777907-f5dbbbb44d7c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZnJpY2FuJTIwc3R1ZGVudHMlMjBlZHVjYXRpb258ZW58MXx8fHwxNzYzNDk1NzA4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral'
+      image: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=1600&q=80',
+      stats: ['1000+ Teens Monthly', 'Leadership Training', 'Mentorship Programs']
     },
     {
-      icon: Building,
       title: 'Foundation Partnerships',
-      description: 'Collaborative initiatives with Olaleye Ajanaku, Odidere, and FE-YI Foundations for community impact',
+      description: 'Collaborative initiatives with Olaleye Ajanaku, Odidere, and FE-YI Foundations for community impact. We work together to enhance safety, recognize excellence, provide food support, and empower women economically.',
       page: 'projects',
-      color: 'bg-blue-600',
-      image: 'https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0ZWFtd29yayUyMGNvbGxhYm9yYXRpb258ZW58MXx8fHwxNzYzNDE4NzM5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral'
+      image: 'https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0ZWFtd29yayUyMGNvbGxhYm9yYXRpb258ZW58MXx8fHwxNzYzNDE4NzM5fDA&ixlib=rb-4.1.0&q=80&w=1080',
+      stats: ['3 Foundation Partners', 'Community Impact', 'Women Empowerment']
     },
   ];
 
   return (
-    <div className="py-20 bg-gradient-to-b from-gray-950 to-gray-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h1 className="text-5xl mb-6 font-bold text-white" style={{ fontFamily: "'Orbitron', sans-serif" }}>What We Do</h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+    <div className="bg-gradient-to-b from-gray-950 to-gray-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+      {/* Hero Section */}
+      <div className="relative py-32 flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950" />
+        <div className="absolute top-20 left-10 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse-glow" />
+        <div className="absolute bottom-20 right-10 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: '1s' }} />
+        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+          <h1 className="text-6xl md:text-7xl mb-6 font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent" style={{ fontFamily: "'Orbitron', sans-serif" }}>What We Do</h1>
+          <p className="text-xl md:text-2xl text-gray-300 leading-relaxed">
             DDI Strategic Plan focuses on major focal areas that encompass running programs and planned strategies to address emerging issues in youth development and community welfare.
           </p>
         </div>
+      </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {programs.map((program, index) => {
-            const Icon = program.icon;
-            return (
-              <Card
-                key={index}
-                className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer bg-gray-800/50 border-gray-700/50"
-                onClick={() => onNavigate(program.page)}
-              >
-                <div className="relative h-48">
+      {/* Program Sections */}
+      {programs.map((program, index) => (
+        <div key={index} className={`py-20 ${index % 2 === 0 ? 'bg-gray-950' : 'bg-gray-900'}`}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className={`grid lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
+              <div className={`${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+                <h2 className="text-4xl md:text-5xl font-bold text-white mb-6" style={{ fontFamily: "'Orbitron', sans-serif" }}>{program.title}</h2>
+                <p className="text-lg text-gray-300 mb-8 leading-relaxed">{program.description}</p>
+                <div className="flex flex-wrap gap-3 mb-8">
+                  {program.stats.map((stat, idx) => (
+                    <span key={idx} className="px-4 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full text-cyan-400 text-sm">{stat}</span>
+                  ))}
+                </div>
+                <Button
+                  onClick={() => onNavigate(program.page)}
+                  className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-8 py-6 text-lg rounded-xl shadow-xl hover:shadow-cyan-500/50 transition-all hover:scale-105"
+                >
+                  Learn More
+                </Button>
+              </div>
+              <div className={`relative ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+                <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                   <ImageWithFallback
                     src={program.image}
                     alt={program.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-[400px] md:h-[500px] object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                  <div className={`absolute bottom-4 left-4 w-12 h-12 ${program.color} rounded-lg flex items-center justify-center`}>
-                    <Icon className="w-6 h-6 text-white" />
-                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-950/40 to-transparent" />
                 </div>
-                <CardContent className="p-6 bg-gray-800/50">
-                  <h3 className="text-2xl mb-3 text-white">{program.title}</h3>
-                  <p className="text-gray-300">{program.description}</p>
-                </CardContent>
-              </Card>
-            );
-          })}
+                <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-3xl opacity-20 blur-2xl" />
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      ))}
     </div>
   );
 }

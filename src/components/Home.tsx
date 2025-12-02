@@ -373,20 +373,31 @@ export function Home({ onNavigate }: HomeProps) {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-start">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 items-center justify-items-center">
             {team.map((member, index) => (
-              <div key={index} className="flex flex-col items-center text-center group animate-fade-in" style={{ animationDelay: `${index * 0.1}s`, opacity: 0 }}>
-                <div className="w-40 h-40 bg-gray-800 rounded-2xl mb-4 overflow-hidden group-hover:scale-105 group-hover:-translate-y-2 transition-all shadow-xl border border-gray-700/50 card-glow">
+              <div key={index} className="flex flex-col items-center text-center group animate-fade-in w-full" style={{ animationDelay: `${index * 0.1}s`, opacity: 0 }}>
+                <div className="w-40 h-40 bg-gray-800 rounded-2xl mb-4 overflow-hidden group-hover:scale-105 group-hover:-translate-y-2 transition-all shadow-xl border border-gray-700/50 card-glow flex-shrink-0">
                   <ImageWithFallback
                     src={member.image}
                     alt={member.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <h3 className="text-xl font-bold text-white">{member.name}</h3>
-                <p className="text-cyan-400 font-semibold">{member.role}</p>
+                <h3 className="text-base font-bold text-white">{member.name}</h3>
+                <p className="text-cyan-400 font-semibold text-sm">{member.role}</p>
               </div>
             ))}
+          </div>
+
+          <div className="flex justify-center mt-12">
+            <Button
+              size="lg"
+              onClick={() => onNavigate('team')}
+              className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white shadow-2xl hover:shadow-cyan-500/50 transition-all text-lg px-12 py-7 font-semibold rounded-xl border-0"
+            >
+              Meet Full Team
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
           </div>
         </div>
       </section>
