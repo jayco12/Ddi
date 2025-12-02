@@ -122,7 +122,7 @@ function AboutOverview({ onNavigate }: { onNavigate: (page: string) => void }) {
           </div>
         </div>
         {/* Quick Links */}
-        <div className="flex flex-col sm:flex-row gap-6 mb-20">
+        <div className="flex flex-col sm:flex-row gap-6 mt-20 mb-20">
           {sections.map((item, idx) => {
             const Icon = item.icon as any;
             return (
@@ -146,7 +146,7 @@ function AboutOverview({ onNavigate }: { onNavigate: (page: string) => void }) {
         </div>
 
         {/* Vision, Mission & Values Section with Background Image */}
-        <div className="mb-20 relative">
+        <div className="mb-20 mt-20 relative">
           {/* Background Image Section */}
           <div className="relative h-96 rounded-3xl overflow-hidden mb-12">
             <ImageWithFallback
@@ -419,21 +419,24 @@ function Team() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {teamMembers.map((member, index) => (
+          {teamMembers.map((member, index) => {
+            const needsAdjustment = ['Segun Oduyebo', 'Bibilari Adewusi', 'Jameson Ochie', 'Ige'].includes(member.name);
+            return (
             <Card key={index} className="transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 overflow-hidden bg-gray-800/50 border-gray-700/50 backdrop-blur-sm group card-glow">
               <CardContent className="p-0">
-                <div className="relative w-full h-56 overflow-hidden bg-gray-900">
-                  <ImageWithFallback src={member.image} alt={member.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <div className="relative w-full aspect-square overflow-hidden bg-gray-900">
+                  <ImageWithFallback src={member.image} alt={member.name} className={`w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ${needsAdjustment ? 'object-top' : ''}`} />
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60" />
                 </div>
-                <div className="p-5">
-                  <h3 className="text-lg font-bold mb-1 text-white" style={{ fontFamily: "'Orbitron', sans-serif" }}>{member.name}</h3>
-                  <div className="text-cyan-400 mb-2 font-semibold text-sm">{member.role}</div>
-                  <p className="text-gray-400 text-sm">{member.description}</p>
+                <div className="p-4">
+                  <h3 className="text-base font-bold mb-1 text-white" style={{ fontFamily: "'Orbitron', sans-serif" }}>{member.name}</h3>
+                  <div className="text-cyan-400 mb-2 font-semibold text-xs">{member.role}</div>
+                  <p className="text-gray-400 text-xs">{member.description}</p>
                 </div>
               </CardContent>
             </Card>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

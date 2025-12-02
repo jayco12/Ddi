@@ -376,7 +376,7 @@ export function Home({ onNavigate }: HomeProps) {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-start">
             {team.map((member, index) => (
               <div key={index} className="flex flex-col items-center text-center group animate-fade-in" style={{ animationDelay: `${index * 0.1}s`, opacity: 0 }}>
-                <div className="w-48 h-64 bg-gray-800 rounded-2xl mb-4 overflow-hidden group-hover:scale-105 group-hover:-translate-y-2 transition-all shadow-xl border border-gray-700/50 card-glow">
+                <div className="w-40 h-40 bg-gray-800 rounded-2xl mb-4 overflow-hidden group-hover:scale-105 group-hover:-translate-y-2 transition-all shadow-xl border border-gray-700/50 card-glow">
                   <ImageWithFallback
                     src={member.image}
                     alt={member.name}
