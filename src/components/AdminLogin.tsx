@@ -11,16 +11,25 @@ interface AdminLoginProps {
   onLogin: (token: string) => void;
 }
 
+// Singleton Supabase client
+let supabaseInstance: ReturnType<typeof createClient> | null = null;
+const getSupabaseClient = () => {
+  if (!supabaseInstance) {
+    supabaseInstance = createClient(
+      `https://${projectId}.supabase.co`,
+      publicAnonKey
+    );
+  }
+  return supabaseInstance;
+};
+
 export function AdminLogin({ onLogin }: AdminLoginProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const supabase = createClient(
-    `https://${projectId}.supabase.co`,
-    publicAnonKey
-  );
+  const supabase = getSupabaseClient();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();

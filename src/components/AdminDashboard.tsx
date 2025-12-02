@@ -498,7 +498,7 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid grid-cols-5 w-full max-w-2xl mb-8 bg-gray-800/50 border border-gray-700/50">
+          <TabsList className="flex flex-wrap w-full mb-8 bg-gray-800/50 border border-gray-700/50">
             <TabsTrigger value="overview">
               <LayoutDashboard className="w-4 h-4 mr-2" />
               Overview
@@ -985,6 +985,61 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
                       </div>
                     ))}
                     {mentors.length === 0 && <div className="text-gray-400">No approved destiny coaches</div>}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          {/* Mentees Tab */}
+          <TabsContent value="mentees">
+            <div className="grid lg:grid-cols-2 gap-8">
+              <Card className="bg-gray-800/50 border-gray-700/50">
+                <CardHeader>
+                  <CardTitle className="text-white">Add Coachee</CardTitle>
+                  <CardDescription className="text-gray-400">Create a new coachee and assign to a destiny coach</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <form onSubmit={createMentee} className="space-y-4">
+                    <div>
+                      <Label htmlFor="mentee-name" className="text-gray-300">Coachee Name</Label>
+                      <Input id="mentee-name" value={newMenteeName} onChange={(e) => setNewMenteeName(e.target.value)} required className="bg-gray-900/50 border-gray-700 text-white" />
+                    </div>
+                    <div>
+                      <Label htmlFor="assigned-mentor" className="text-gray-300">Assign Destiny Coach</Label>
+                      <select id="assigned-mentor" value={newMenteeAssignedMentor || ''} onChange={(e) => setNewMenteeAssignedMentor(e.target.value)} required className="w-full bg-gray-900/50 border border-gray-700 text-white rounded-md px-3 py-2">
+                        <option value="">Select a destiny coach</option>
+                        {mentors.map((m) => (
+                          <option key={m.id} value={m.id}>{m.name || m.fullName}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <Button type="submit" disabled={loading}><UserPlus className="w-4 h-4 mr-2" />Add Coachee</Button>
+                  </form>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-gray-800/50 border-gray-700/50">
+                <CardHeader>
+                  <CardTitle className="text-white">Coachees List</CardTitle>
+                  <CardDescription className="text-gray-400">Manage coachees and their assigned destiny coaches</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4 max-h-[600px] overflow-y-auto">
+                    {mentees.map((mentee) => {
+                      const assignedCoach = mentors.find(m => m.id === mentee.mentor_id);
+                      return (
+                      <div key={mentee.id} className="border border-gray-700 rounded-lg p-4 bg-gray-900/30">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <div className="font-semibold text-white">{mentee.name}</div>
+                            <div className="text-sm text-gray-400">Assigned Coach: {assignedCoach ? (assignedCoach.name || assignedCoach.fullName) : 'None'}</div>
+                          </div>
+                        </div>
+                      </div>
+                      );
+                    })}
+                    {mentees.length === 0 && <div className="text-gray-400 text-center py-8">No coachees yet</div>}
                   </div>
                 </CardContent>
               </Card>
