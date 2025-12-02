@@ -2,17 +2,17 @@ import * as React from "react";
 
 import { cn } from "./utils";
 
-function Card({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card"
-      className={cn(
-        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border",
-        className,
-      )}
-      {...props}
-    />
-  );
+function Card({ children, className = "", ...props }: any) {
+return (
+<div className={cn("bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden", className)} {...props}>
+{children}
+</div>
+);
+}
+
+
+function CardContent({ children, className = "" }: any) {
+return <div className={cn("p-6", className)}>{children}</div>;
 }
 
 function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
@@ -61,15 +61,6 @@ function CardAction({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function CardContent({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-content"
-      className={cn("px-6 [&:last-child]:pb-6", className)}
-      {...props}
-    />
-  );
-}
 
 function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (

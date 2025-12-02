@@ -89,33 +89,32 @@ export function Contact() {
   ];
 
   return (
-    <div className="py-20">
+    <div className="py-20 bg-gradient-to-b from-gray-950 to-gray-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h1 className="text-5xl mb-6">Contact Us</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <h1 className="text-5xl mb-6 text-white font-bold" style={{ fontFamily: "'Orbitron', sans-serif" }}>Contact Us</h1>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Get in touch with us to learn more about our programs, volunteer opportunities, 
             or partnership possibilities
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Information */}
           <div>
-            <h2 className="text-3xl mb-8">Get In Touch</h2>
+            <h2 className="text-3xl mb-8 text-white">Get In Touch</h2>
             <div className="space-y-6 mb-8">
               {contactInfo.map((info, index) => {
                 const Icon = info.icon;
                 return (
-                  <Card key={index}>
+                  <Card key={index} className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
                     <CardContent className="p-6 flex gap-4">
-                      <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <Icon className="w-6 h-6 text-blue-600" />
+                      <div className="w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Icon className="w-6 h-6 text-cyan-400" />
                       </div>
                       <div>
-                        <h3 className="text-lg mb-2">{info.title}</h3>
+                        <h3 className="text-lg mb-2 text-white">{info.title}</h3>
                         {info.details.map((detail, dIndex) => (
-                          <p key={dIndex} className="text-gray-600">
+                          <p key={dIndex} className="text-gray-300">
                             {detail}
                           </p>
                         ))}
@@ -126,10 +125,10 @@ export function Contact() {
               })}
             </div>
 
-            <Card className="bg-blue-50 border-blue-200">
+            <Card className="bg-cyan-500/10 border-cyan-500/20 backdrop-blur-sm">
               <CardContent className="p-6">
-                <h3 className="text-lg mb-3">Office Hours</h3>
-                <div className="space-y-2 text-gray-700">
+                <h3 className="text-lg mb-3 text-white">Office Hours</h3>
+                <div className="space-y-2 text-gray-300">
                   <p>Monday - Friday: 8:00 AM - 5:00 PM</p>
                   <p>Saturday: 9:00 AM - 1:00 PM</p>
                   <p>Sunday: Closed</p>
@@ -138,62 +137,65 @@ export function Contact() {
             </Card>
           </div>
 
-          {/* Contact Form */}
           <div>
-            <Card>
+            <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
               <CardContent className="p-8">
-                <h2 className="text-3xl mb-6">Send Us a Message</h2>
+                <h2 className="text-3xl mb-6 text-white">Send Us a Message</h2>
 
                 {submitted && (
-                  <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-md mb-6">
+                  <div className="bg-green-500/10 border border-green-500/20 text-green-400 px-4 py-3 rounded-md mb-6">
                     Thank you for your message! We'll get back to you soon.
                   </div>
                 )}
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="space-y-2">
-                    <Label htmlFor="name">Name *</Label>
+                    <Label htmlFor="name" className="text-gray-300">Name *</Label>
                     <Input
                       id="name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       required
+                      className="bg-gray-900/50 border-gray-700 text-white"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email *</Label>
+                    <Label htmlFor="email" className="text-gray-300">Email *</Label>
                     <Input
                       id="email"
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
+                      className="bg-gray-900/50 border-gray-700 text-white"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="subject">Subject *</Label>
+                    <Label htmlFor="subject" className="text-gray-300">Subject *</Label>
                     <Input
                       id="subject"
                       value={subject}
                       onChange={(e) => setSubject(e.target.value)}
                       required
+                      className="bg-gray-900/50 border-gray-700 text-white"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="message">Message *</Label>
+                    <Label htmlFor="message" className="text-gray-300">Message *</Label>
                     <Textarea
                       id="message"
                       rows={6}
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       required
+                      className="bg-gray-900/50 border-gray-700 text-white"
                     />
                   </div>
 
-                  <Button type="submit" size="lg" className="w-full" disabled={loading}>
+                  <Button type="submit" size="lg" className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 border-0" disabled={loading}>
                     <Send className="w-5 h-5 mr-2" />
                     {loading ? 'Sending...' : 'Send Message'}
                   </Button>
@@ -203,30 +205,29 @@ export function Contact() {
           </div>
         </div>
 
-        {/* Ways to Get Involved */}
         <div className="mt-20">
-          <h2 className="text-3xl mb-8 text-center">Ways to Get Involved</h2>
+          <h2 className="text-3xl mb-8 text-center text-white">Ways to Get Involved</h2>
           <div className="grid md:grid-cols-3 gap-8">
-            <Card>
+            <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm hover:shadow-2xl transition-all">
               <CardContent className="p-6 text-center">
-                <h3 className="text-xl mb-3">Volunteer</h3>
-                <p className="text-gray-600 mb-4">
+                <h3 className="text-xl mb-3 text-white">Volunteer</h3>
+                <p className="text-gray-300 mb-4">
                   Join our team of dedicated volunteers and make a direct impact in communities
                 </p>
               </CardContent>
             </Card>
-            <Card>
+            <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm hover:shadow-2xl transition-all">
               <CardContent className="p-6 text-center">
-                <h3 className="text-xl mb-3">Partner With Us</h3>
-                <p className="text-gray-600 mb-4">
+                <h3 className="text-xl mb-3 text-white">Partner With Us</h3>
+                <p className="text-gray-300 mb-4">
                   Collaborate with DDI to expand our reach and maximize impact
                 </p>
               </CardContent>
             </Card>
-            <Card>
+            <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm hover:shadow-2xl transition-all">
               <CardContent className="p-6 text-center">
-                <h3 className="text-xl mb-3">Support Our Programs</h3>
-                <p className="text-gray-600 mb-4">
+                <h3 className="text-xl mb-3 text-white">Support Our Programs</h3>
+                <p className="text-gray-300 mb-4">
                   Donate or sponsor specific programs to help us continue our work
                 </p>
               </CardContent>

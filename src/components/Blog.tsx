@@ -89,11 +89,11 @@ export function Blog({ onNavigate, onSelectPost }: BlogProps) {
   }
 
   return (
-    <div className="py-20">
+    <div className="py-20 bg-gradient-to-b from-gray-950 to-gray-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h1 className="text-5xl mb-6">Blog & News</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <h1 className="text-5xl mb-6 text-white" style={{ fontFamily: "'Orbitron', sans-serif" }}>Blog & News</h1>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Stay updated with our latest stories, project updates, and insights from the field
           </p>
         </div>
@@ -105,7 +105,7 @@ export function Blog({ onNavigate, onSelectPost }: BlogProps) {
               placeholder="Search posts..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="flex-1"
+              className="flex-1 bg-gray-800/50 border-gray-700 text-white"
             />
           </div>
 
@@ -116,8 +116,8 @@ export function Blog({ onNavigate, onSelectPost }: BlogProps) {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-4 py-2 rounded-full transition-colors ${
                   selectedCategory === category
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    ? 'bg-cyan-500 text-white'
+                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
                 }`}
               >
                 {category}
@@ -138,7 +138,7 @@ export function Blog({ onNavigate, onSelectPost }: BlogProps) {
             {filteredPosts.map((post) => (
               <Card
                 key={post.id}
-                className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer bg-gray-800/50 border-gray-700/50"
                 onClick={() => onSelectPost(post.id)}
               >
                 {post.image && (
@@ -151,7 +151,7 @@ export function Blog({ onNavigate, onSelectPost }: BlogProps) {
                   </div>
                 )}
                 <CardContent className="p-6">
-                  <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
+                  <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
                     <div className="flex items-center gap-1">
                       <Calendar className="w-4 h-4" />
                       {new Date(post.createdAt).toLocaleDateString()}
@@ -161,12 +161,12 @@ export function Blog({ onNavigate, onSelectPost }: BlogProps) {
                       {post.author}
                     </div>
                   </div>
-                  <div className="inline-block px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm mb-3">
+                  <div className="inline-block px-3 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-sm mb-3">
                     {post.category}
                   </div>
-                  <h3 className="text-xl mb-3">{post.title}</h3>
-                  <p className="text-gray-600 mb-4 line-clamp-3">{post.excerpt}</p>
-                  <button className="text-blue-600 hover:text-blue-700 flex items-center gap-1">
+                  <h3 className="text-xl mb-3 text-white">{post.title}</h3>
+                  <p className="text-gray-300 mb-4 line-clamp-3">{post.excerpt}</p>
+                  <button className="text-cyan-400 hover:text-cyan-300 flex items-center gap-1">
                     Read More
                     <ArrowRight className="w-4 h-4" />
                   </button>

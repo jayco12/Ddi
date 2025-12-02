@@ -482,23 +482,23 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-gray-50 py-8">
+    <div className="min-h-[calc(100vh-4rem)] bg-gray-950 py-8" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {serverDebug && (
-          <div className="mb-4 p-4 bg-red-50 border border-red-200 text-red-800 rounded-md">
+          <div className="mb-4 p-4 bg-red-900/20 border border-red-500/30 text-red-400 rounded-md">
             <div className="flex justify-between items-start">
               <div className="whitespace-pre-wrap text-sm">{serverDebug}</div>
-              <button onClick={() => setServerDebug(null)} className="ml-4 text-sm text-red-600">Dismiss</button>
+              <button onClick={() => setServerDebug(null)} className="ml-4 text-sm text-red-400 hover:text-red-300">Dismiss</button>
             </div>
           </div>
         )}
         <div className="mb-8">
-          <h1 className="text-3xl mb-2">Admin Dashboard</h1>
-          <p className="text-gray-600">Manage your DDI website content and view insights</p>
+          <h1 className="text-3xl mb-2 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent font-bold" style={{ fontFamily: "'Orbitron', sans-serif" }}>Admin Dashboard</h1>
+          <p className="text-gray-400">Manage your DDI website content and view insights</p>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid grid-cols-5 w-full max-w-2xl mb-8">
+          <TabsList className="grid grid-cols-5 w-full max-w-2xl mb-8 bg-gray-800/50 border border-gray-700/50">
             <TabsTrigger value="overview">
               <LayoutDashboard className="w-4 h-4 mr-2" />
               Overview
@@ -525,62 +525,62 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
             </TabsTrigger>
             <TabsTrigger value="mentors">
               <Users className="w-4 h-4 mr-2" />
-              Mentors
+              Destiny Coaches
             </TabsTrigger>
             <TabsTrigger value="mentees">
               <UserPlus className="w-4 h-4 mr-2" />
-              Mentees
+              Coachees
             </TabsTrigger>
            </TabsList>
 
           {/* Overview Tab */}
           <TabsContent value="overview">
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              <Card>
+              <Card className="bg-gray-800/50 border-gray-700/50">
                 <CardHeader>
-                  <CardTitle>Total Views</CardTitle>
+                  <CardTitle className="text-white">Total Views</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl">{analytics?.totalViews || 0}</div>
+                  <div className="text-3xl text-cyan-400 font-bold">{analytics?.totalViews || 0}</div>
                 </CardContent>
               </Card>
-              <Card>
+              <Card className="bg-gray-800/50 border-gray-700/50">
                 <CardHeader>
-                  <CardTitle>Blog Posts</CardTitle>
+                  <CardTitle className="text-white">Blog Posts</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl">{analytics?.blogPostCount || 0}</div>
+                  <div className="text-3xl text-cyan-400 font-bold">{analytics?.blogPostCount || 0}</div>
                 </CardContent>
               </Card>
-              <Card>
+              <Card className="bg-gray-800/50 border-gray-700/50">
                 <CardHeader>
-                  <CardTitle>Gallery Images</CardTitle>
+                  <CardTitle className="text-white">Gallery Images</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl">{analytics?.galleryImageCount || 0}</div>
+                  <div className="text-3xl text-cyan-400 font-bold">{analytics?.galleryImageCount || 0}</div>
                 </CardContent>
               </Card>
-              <Card>
+              <Card className="bg-gray-800/50 border-gray-700/50">
                 <CardHeader>
-                  <CardTitle>Contact Submissions</CardTitle>
+                  <CardTitle className="text-white">Contact Submissions</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl">{contactSubmissions.length}</div>
+                  <div className="text-3xl text-cyan-400 font-bold">{contactSubmissions.length}</div>
                 </CardContent>
               </Card>
             </div>
 
-            <Card>
+            <Card className="bg-gray-800/50 border-gray-700/50">
               <CardHeader>
-                <CardTitle>Recent Blog Posts</CardTitle>
+                <CardTitle className="text-white">Recent Blog Posts</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {analytics?.recentPosts?.slice(0, 5).map((post: any) => (
-                    <div key={post.id} className="flex items-center justify-between border-b pb-4">
+                    <div key={post.id} className="flex items-center justify-between border-b border-gray-700 pb-4">
                       <div>
-                        <div>{post.title}</div>
-                        <div className="text-sm text-gray-600">
+                        <div className="text-white">{post.title}</div>
+                        <div className="text-sm text-gray-400">
                           {new Date(post.createdAt).toLocaleDateString()}
                         </div>
                       </div>
@@ -603,61 +603,66 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
           {/* Blog Tab */}
           <TabsContent value="blog">
             <div className="grid lg:grid-cols-2 gap-8">
-              <Card>
+              <Card className="bg-gray-800/50 border-gray-700/50">
                 <CardHeader>
-                  <CardTitle>{editingPostId ? 'Edit Blog Post' : 'Create New Blog Post'}</CardTitle>
-                  <CardDescription>
+                  <CardTitle className="text-white">{editingPostId ? 'Edit Blog Post' : 'Create New Blog Post'}</CardTitle>
+                  <CardDescription className="text-gray-400">
                     {editingPostId ? 'Update the blog post' : 'Add a new post to your blog'}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleCreateOrUpdatePost} className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="title">Title</Label>
+                      <Label htmlFor="title" className="text-gray-300">Title</Label>
                       <Input
                         id="title"
                         value={blogTitle}
                         onChange={(e) => setBlogTitle(e.target.value)}
                         required
+                        className="bg-gray-900/50 border-gray-700 text-white"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="excerpt">Excerpt</Label>
+                      <Label htmlFor="excerpt" className="text-gray-300">Excerpt</Label>
                       <Textarea
                         id="excerpt"
                         value={blogExcerpt}
                         onChange={(e) => setBlogExcerpt(e.target.value)}
                         rows={2}
                         required
+                        className="bg-gray-900/50 border-gray-700 text-white"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="content">Content</Label>
+                      <Label htmlFor="content" className="text-gray-300">Content</Label>
                       <Textarea
                         id="content"
                         value={blogContent}
                         onChange={(e) => setBlogContent(e.target.value)}
                         rows={8}
                         required
+                        className="bg-gray-900/50 border-gray-700 text-white"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="category">Category</Label>
+                      <Label htmlFor="category" className="text-gray-300">Category</Label>
                       <Input
                         id="category"
                         value={blogCategory}
                         onChange={(e) => setBlogCategory(e.target.value)}
                         placeholder="e.g., Education, Projects, News"
                         required
+                        className="bg-gray-900/50 border-gray-700 text-white placeholder:text-gray-500"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="image">Image URL (optional)</Label>
+                      <Label htmlFor="image" className="text-gray-300">Image URL (optional)</Label>
                       <Input
                         id="image"
                         value={blogImage}
                         onChange={(e) => setBlogImage(e.target.value)}
                         placeholder="https://..."
+                        className="bg-gray-900/50 border-gray-700 text-white placeholder:text-gray-500"
                       />
                     </div>
                     <div className="flex gap-2">
@@ -686,17 +691,17 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card className="bg-gray-800/50 border-gray-700/50">
                 <CardHeader>
-                  <CardTitle>All Blog Posts</CardTitle>
-                  <CardDescription>Manage your existing blog posts</CardDescription>
+                  <CardTitle className="text-white">All Blog Posts</CardTitle>
+                  <CardDescription className="text-gray-400">Manage your existing blog posts</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4 max-h-[600px] overflow-y-auto">
                     {blogPosts.map((post) => (
-                      <div key={post.id} className="border rounded-lg p-4">
-                        <div className="mb-2">{post.title}</div>
-                        <div className="text-sm text-gray-600 mb-3">
+                      <div key={post.id} className="border border-gray-700 rounded-lg p-4 bg-gray-900/30">
+                        <div className="mb-2 text-white">{post.title}</div>
+                        <div className="text-sm text-gray-400 mb-3">
                           {post.category} • {new Date(post.createdAt).toLocaleDateString()}
                         </div>
                         <div className="flex gap-2">
@@ -729,40 +734,43 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
           {/* Gallery Tab */}
           <TabsContent value="gallery">
             <div className="grid lg:grid-cols-2 gap-8">
-              <Card>
+              <Card className="bg-gray-800/50 border-gray-700/50">
                 <CardHeader>
-                  <CardTitle>Upload New Image</CardTitle>
-                  <CardDescription>Add images to your gallery</CardDescription>
+                  <CardTitle className="text-white">Upload New Image</CardTitle>
+                  <CardDescription className="text-gray-400">Add images to your gallery</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleUploadImage} className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="gallery-title">Title</Label>
+                      <Label htmlFor="gallery-title" className="text-gray-300">Title</Label>
                       <Input
                         id="gallery-title"
                         value={galleryTitle}
                         onChange={(e) => setGalleryTitle(e.target.value)}
                         required
+                        className="bg-gray-900/50 border-gray-700 text-white"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="gallery-category">Category</Label>
+                      <Label htmlFor="gallery-category" className="text-gray-300">Category</Label>
                       <Input
                         id="gallery-category"
                         value={galleryCategory}
                         onChange={(e) => setGalleryCategory(e.target.value)}
                         placeholder="e.g., Events, Projects, Team"
                         required
+                        className="bg-gray-900/50 border-gray-700 text-white placeholder:text-gray-500"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="image-url">Image URL</Label>
+                      <Label htmlFor="image-url" className="text-gray-300">Image URL</Label>
                       <Input
                         id="image-url"
                         value={galleryImageUrl}
                         onChange={(e) => setGalleryImageUrl(e.target.value)}
                         placeholder="https://..."
                         required
+                        className="bg-gray-900/50 border-gray-700 text-white placeholder:text-gray-500"
                       />
                     </div>
                     <Button type="submit" disabled={loading || !galleryImageUrl}>
@@ -773,23 +781,23 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card className="bg-gray-800/50 border-gray-700/50">
                 <CardHeader>
-                  <CardTitle>Gallery Images ({galleryImages.length})</CardTitle>
-                  <CardDescription>Manage your uploaded images</CardDescription>
+                  <CardTitle className="text-white">Gallery Images ({galleryImages.length})</CardTitle>
+                  <CardDescription className="text-gray-400">Manage your uploaded images</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 gap-4 max-h-[600px] overflow-y-auto">
                     {galleryImages.map((image) => (
-                      <div key={image.id} className="border rounded-lg overflow-hidden">
+                      <div key={image.id} className="border border-gray-700 rounded-lg overflow-hidden bg-gray-900/30">
                         <ImageWithFallback
                           src={image.url}
                           alt={image.title}
                           className="w-full h-32 object-cover"
                         />
                         <div className="p-3">
-                          <div className="text-sm mb-1">{image.title}</div>
-                          <div className="text-xs text-gray-600 mb-2">{image.category}</div>
+                          <div className="text-sm mb-1 text-white">{image.title}</div>
+                          <div className="text-xs text-gray-400 mb-2">{image.category}</div>
                           <Button
                             size="sm"
                             variant="outline"
@@ -810,20 +818,20 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
 
           {/* Analytics Tab */}
           <TabsContent value="analytics">
-            <Card>
+            <Card className="bg-gray-800/50 border-gray-700/50">
               <CardHeader>
-                <CardTitle>Website Analytics</CardTitle>
-                <CardDescription>View insights about your website performance</CardDescription>
+                <CardTitle className="text-white">Website Analytics</CardTitle>
+                <CardDescription className="text-gray-400">View insights about your website performance</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-lg mb-4">Page Views</h3>
+                    <h3 className="text-lg mb-4 text-white">Page Views</h3>
                     <div className="space-y-2">
                       {analytics?.pageViews?.map((pv: any, index: number) => (
-                        <div key={index} className="flex justify-between items-center border-b pb-2">
-                          <span>{pv.key?.replace('analytics:page-views:', '')}</span>
-                          <span className="text-blue-600">{pv.value} views</span>
+                        <div key={index} className="flex justify-between items-center border-b border-gray-700 pb-2">
+                          <span className="text-gray-300">{pv.key?.replace('analytics:page-views:', '')}</span>
+                          <span className="text-cyan-400">{pv.value} views</span>
                         </div>
                       ))}
                     </div>
@@ -835,30 +843,30 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
 
           {/* Contact Tab */}
           <TabsContent value="contact">
-            <Card>
+            <Card className="bg-gray-800/50 border-gray-700/50">
               <CardHeader>
-                <CardTitle>Contact Form Submissions</CardTitle>
-                <CardDescription>View messages from website visitors</CardDescription>
+                <CardTitle className="text-white">Contact Form Submissions</CardTitle>
+                <CardDescription className="text-gray-400">View messages from website visitors</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {contactSubmissions.map((submission) => (
-                    <div key={submission.id} className="border rounded-lg p-4">
+                    <div key={submission.id} className="border border-gray-700 rounded-lg p-4 bg-gray-900/30">
                       <div className="flex justify-between mb-2">
                         <div>
-                          <span>{submission.name}</span>
-                          <span className="text-gray-600 ml-2">({submission.email})</span>
+                          <span className="text-white">{submission.name}</span>
+                          <span className="text-gray-400 ml-2">({submission.email})</span>
                         </div>
-                        <span className="text-sm text-gray-600">
+                        <span className="text-sm text-gray-400">
                           {new Date(submission.submittedAt).toLocaleDateString()}
                         </span>
                       </div>
-                      <div className="mb-2">{submission.subject}</div>
-                      <div className="text-gray-600">{submission.message}</div>
+                      <div className="mb-2 text-white">{submission.subject}</div>
+                      <div className="text-gray-400">{submission.message}</div>
                     </div>
                   ))}
                   {contactSubmissions.length === 0 && (
-                    <p className="text-gray-600 text-center py-8">No submissions yet</p>
+                    <p className="text-gray-400 text-center py-8">No submissions yet</p>
                   )}
                 </div>
               </CardContent>
@@ -868,20 +876,20 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
           {/* Events Tab */}
           <TabsContent value="events">
             <div className="grid lg:grid-cols-2 gap-8">
-              <Card>
+              <Card className="bg-gray-800/50 border-gray-700/50">
                 <CardHeader>
-                  <CardTitle>Create Event</CardTitle>
-                  <CardDescription>Add an event for tracking attendance and metrics</CardDescription>
+                  <CardTitle className="text-white">Create Event</CardTitle>
+                  <CardDescription className="text-gray-400">Add an event for tracking attendance and metrics</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={createEvent} className="space-y-4">
                     <div>
-                      <Label htmlFor="event-name">Event Name</Label>
-                      <Input id="event-name" value={newEventName} onChange={(e) => setNewEventName(e.target.value)} required />
+                      <Label htmlFor="event-name" className="text-gray-300">Event Name</Label>
+                      <Input id="event-name" value={newEventName} onChange={(e) => setNewEventName(e.target.value)} required className="bg-gray-900/50 border-gray-700 text-white" />
                     </div>
                     <div>
-                      <Label htmlFor="event-date">Date</Label>
-                      <Input id="event-date" type="date" value={newEventDate} onChange={(e) => setNewEventDate(e.target.value)} required />
+                      <Label htmlFor="event-date" className="text-gray-300">Date</Label>
+                      <Input id="event-date" type="date" value={newEventDate} onChange={(e) => setNewEventDate(e.target.value)} required className="bg-gray-900/50 border-gray-700 text-white" />
                     </div>
                     <div className="flex gap-2">
                       <Button type="submit" disabled={loading}><Plus className="w-4 h-4 mr-2" />Create Event</Button>
@@ -890,27 +898,27 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card className="bg-gray-800/50 border-gray-700/50">
                 <CardHeader>
-                  <CardTitle>Events & Attendance</CardTitle>
-                  <CardDescription>Mark attendance and view metrics</CardDescription>
+                  <CardTitle className="text-white">Events & Attendance</CardTitle>
+                  <CardDescription className="text-gray-400">Mark attendance and view metrics</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     {events.map((ev: any) => (
-                      <div key={ev.id} className="border rounded-lg p-3">
+                      <div key={ev.id} className="border border-gray-700 rounded-lg p-3 bg-gray-900/30">
                         <div className="flex justify-between items-center">
                           <div>
-                            <div className="font-semibold">{ev.title}</div>
-                            <div className="text-sm text-gray-600">{new Date(ev.date).toLocaleDateString()}</div>
+                            <div className="font-semibold text-white">{ev.title}</div>
+                            <div className="text-sm text-gray-400">{new Date(ev.date).toLocaleDateString()}</div>
                           </div>
-                          <div className="text-sm text-gray-700">Attendees: {ev.attendanceCount || 0}</div>
+                          <div className="text-sm text-cyan-400">Attendees: {ev.attendanceCount || 0}</div>
                         </div>
                         <div className="mt-3 grid grid-cols-1 sm:grid-cols-4 gap-2 items-center">
-                          <Input placeholder="Attendee name (optional)" value={attendanceName} onChange={(e) => setAttendanceName(e.target.value)} />
+                          <Input placeholder="Attendee name (optional)" value={attendanceName} onChange={(e) => setAttendanceName(e.target.value)} className="bg-gray-900/50 border-gray-700 text-white placeholder:text-gray-500" />
                           <Button onClick={() => markAttendance(ev.id)}><Check className="w-4 h-4 mr-2" />Mark Attendance</Button>
                           <div className="flex items-center gap-2">
-                            <Input type="number" min={1} value={attendanceCount} onChange={(e) => setAttendanceCount(Number(e.target.value || 1))} className="w-24" />
+                            <Input type="number" min={1} value={attendanceCount} onChange={(e) => setAttendanceCount(Number(e.target.value || 1))} className="w-24 bg-gray-900/50 border-gray-700 text-white" />
                             <Button variant="outline" onClick={() => addAttendanceCount(ev.id, attendanceCount)}>Add Count</Button>
                           </div>
                           <div className="flex gap-2">
@@ -920,7 +928,7 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
                         </div>
                       </div>
                     ))}
-                    {events.length === 0 && <div className="text-gray-600">No events yet</div>}
+                    {events.length === 0 && <div className="text-gray-400">No events yet</div>}
                   </div>
                 </CardContent>
               </Card>
@@ -930,20 +938,20 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
           {/* Mentors Tab */}
           <TabsContent value="mentors">
             <div className="grid lg:grid-cols-2 gap-8">
-              <Card>
+              <Card className="bg-gray-800/50 border-gray-700/50">
                 <CardHeader>
-                  <CardTitle>Mentor Submissions</CardTitle>
-                  <CardDescription>Review mentor sign-ups and approve</CardDescription>
+                  <CardTitle className="text-white">Destiny Coach Submissions</CardTitle>
+                  <CardDescription className="text-gray-400">Review destiny coach sign-ups and approve</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     {mentorSubmissions.map((m) => (
-                      <div key={m.id} className="border rounded-lg p-3">
+                      <div key={m.id} className="border border-gray-700 rounded-lg p-3 bg-gray-900/30">
                         <div className="flex justify-between">
                           <div>
-                            <div className="font-semibold">{m.name}</div>
-                            <div className="text-sm text-gray-600">{m.email}</div>
-                            <div className="text-sm mt-1">{m.bio || ''}</div>
+                            <div className="font-semibold text-white">{m.name}</div>
+                            <div className="text-sm text-gray-400">{m.email}</div>
+                            <div className="text-sm mt-1 text-gray-300">{m.bio || ''}</div>
                           </div>
                           <div className="flex flex-col gap-2">
                             <Button size="sm" onClick={() => approveMentor(m.id)}><Check className="w-4 h-4 mr-1" />Approve</Button>
@@ -952,63 +960,63 @@ export function AdminDashboard({ accessToken, onLogout }: AdminDashboardProps) {
                         </div>
                       </div>
                     ))}
-                    {mentorSubmissions.length === 0 && <div className="text-gray-600">No pending submissions</div>}
+                    {mentorSubmissions.length === 0 && <div className="text-gray-400">No pending submissions</div>}
                   </div>
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card className="bg-gray-800/50 border-gray-700/50">
                 <CardHeader>
-                  <CardTitle>Approved Mentors</CardTitle>
-                  <CardDescription>Mentors available to assign</CardDescription>
+                  <CardTitle className="text-white">Approved Destiny Coaches</CardTitle>
+                  <CardDescription className="text-gray-400">Destiny coaches available to assign</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3 max-h-[600px] overflow-y-auto">
                     {mentors.map((mt) => (
-                      <div key={mt.id} className="flex items-center justify-between border-b py-2">
+                      <div key={mt.id} className="flex items-center justify-between border-b border-gray-700 py-2">
                         <div>
-                          <div className="font-semibold">{mt.name || mt.fullName}</div>
-                          <div className="text-sm text-gray-600">{mt.email}</div>
+                          <div className="font-semibold text-white">{mt.name || mt.fullName}</div>
+                          <div className="text-sm text-gray-400">{mt.email}</div>
                         </div>
                         <div className="flex items-center gap-3">
-                          <div className="text-sm text-gray-700">{mt.specialty || ''}</div>
+                          <div className="text-sm text-gray-300">{mt.specialty || ''}</div>
                           <Button size="sm" variant="outline" onClick={() => setSelectedMentor(mt)}><Eye className="w-4 h-4 mr-1" />View</Button>
                         </div>
                       </div>
                     ))}
-                    {mentors.length === 0 && <div className="text-gray-600">No approved mentors</div>}
+                    {mentors.length === 0 && <div className="text-gray-400">No approved destiny coaches</div>}
                   </div>
                 </CardContent>
               </Card>
             </div>
           </TabsContent>
 
-          {/* Mentor detail modal */}
+          {/* Destiny Coach detail modal */}
           {selectedMentor && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-              <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4">
-                <div className="p-6 border-b flex justify-between items-start">
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+              <div className="bg-gray-800 border border-gray-700 rounded-lg shadow-xl max-w-2xl w-full mx-4">
+                <div className="p-6 border-b border-gray-700 flex justify-between items-start">
                   <div>
-                    <h3 className="text-xl font-bold">{selectedMentor.name || selectedMentor.fullName}</h3>
-                    <div className="text-sm text-gray-600">{selectedMentor.email}</div>
+                    <h3 className="text-xl font-bold text-white">{selectedMentor.name || selectedMentor.fullName}</h3>
+                    <div className="text-sm text-gray-400">{selectedMentor.email}</div>
                   </div>
                   <div className="ml-4">
-                    <Button variant="ghost" onClick={() => setSelectedMentor(null)}>Close</Button>
+                    <Button variant="ghost" onClick={() => setSelectedMentor(null)} className="text-gray-300 hover:text-white">Close</Button>
                   </div>
                 </div>
                 <div className="p-6 space-y-3">
-                  <div><strong>Phone:</strong> {selectedMentor.phone || '—'}</div>
-                  <div><strong>Age:</strong> {selectedMentor.age || '—'}</div>
-                  <div><strong>Occupation:</strong> {selectedMentor.occupation || '—'}</div>
-                  <div><strong>Education:</strong> {selectedMentor.education || '—'}</div>
-                  <div><strong>Specialty:</strong> {selectedMentor.specialty || '—'}</div>
-                  <div><strong>Availability:</strong> {selectedMentor.availability || '—'}</div>
-                  <div><strong>Skills:</strong> <div className="text-sm text-gray-700 whitespace-pre-wrap">{selectedMentor.skills || selectedMentor.bio || '—'}</div></div>
-                  <div><strong>Experience / Bio:</strong> <div className="text-sm text-gray-700 whitespace-pre-wrap">{selectedMentor.experience || selectedMentor.bio || '—'}</div></div>
-                  <div><strong>Motivation:</strong> <div className="text-sm text-gray-700 whitespace-pre-wrap">{selectedMentor.motivation || '—'}</div></div>
+                  <div className="text-gray-300"><strong className="text-white">Phone:</strong> {selectedMentor.phone || '—'}</div>
+                  <div className="text-gray-300"><strong className="text-white">Age:</strong> {selectedMentor.age || '—'}</div>
+                  <div className="text-gray-300"><strong className="text-white">Occupation:</strong> {selectedMentor.occupation || '—'}</div>
+                  <div className="text-gray-300"><strong className="text-white">Education:</strong> {selectedMentor.education || '—'}</div>
+                  <div className="text-gray-300"><strong className="text-white">Specialty:</strong> {selectedMentor.specialty || '—'}</div>
+                  <div className="text-gray-300"><strong className="text-white">Availability:</strong> {selectedMentor.availability || '—'}</div>
+                  <div className="text-gray-300"><strong className="text-white">Skills:</strong> <div className="text-sm text-gray-400 whitespace-pre-wrap">{selectedMentor.skills || selectedMentor.bio || '—'}</div></div>
+                  <div className="text-gray-300"><strong className="text-white">Experience / Bio:</strong> <div className="text-sm text-gray-400 whitespace-pre-wrap">{selectedMentor.experience || selectedMentor.bio || '—'}</div></div>
+                  <div className="text-gray-300"><strong className="text-white">Motivation:</strong> <div className="text-sm text-gray-400 whitespace-pre-wrap">{selectedMentor.motivation || '—'}</div></div>
                   <div className="text-xs text-gray-500">Joined: {selectedMentor.created_at ? new Date(selectedMentor.created_at).toLocaleString() : '—'}</div>
                 </div>
-                <div className="p-4 border-t flex justify-end">
+                <div className="p-4 border-t border-gray-700 flex justify-end">
                   <Button onClick={() => setSelectedMentor(null)}>Close</Button>
                 </div>
               </div>

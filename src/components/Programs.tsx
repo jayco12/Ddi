@@ -83,11 +83,11 @@ function ProgramsOverview({ onNavigate }: { onNavigate: (page: string) => void }
   ];
 
   return (
-    <div className="py-20">
+    <div className="py-20 bg-gradient-to-b from-gray-950 to-gray-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h1 className="text-5xl mb-6 font-bold text-blue-600">What We Do</h1>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+          <h1 className="text-5xl mb-6 font-bold text-white" style={{ fontFamily: "'Orbitron', sans-serif" }}>What We Do</h1>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             DDI Strategic Plan focuses on major focal areas that encompass running programs and planned strategies to address emerging issues in youth development and community welfare.
           </p>
         </div>
@@ -98,7 +98,7 @@ function ProgramsOverview({ onNavigate }: { onNavigate: (page: string) => void }
             return (
               <Card
                 key={index}
-                className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer bg-gray-800/50 border-gray-700/50"
                 onClick={() => onNavigate(program.page)}
               >
                 <div className="relative h-48">
@@ -112,9 +112,9 @@ function ProgramsOverview({ onNavigate }: { onNavigate: (page: string) => void }
                     <Icon className="w-6 h-6 text-white" />
                   </div>
                 </div>
-                <CardContent className="p-6">
-                  <h3 className="text-2xl mb-3">{program.title}</h3>
-                  <p className="text-gray-600">{program.description}</p>
+                <CardContent className="p-6 bg-gray-800/50">
+                  <h3 className="text-2xl mb-3 text-white">{program.title}</h3>
+                  <p className="text-gray-300">{program.description}</p>
                 </CardContent>
               </Card>
             );
@@ -127,43 +127,43 @@ function ProgramsOverview({ onNavigate }: { onNavigate: (page: string) => void }
 
 function SocialService() {
   return (
-    <div className="py-20 bg-slate-50">
+    <div className="py-20 bg-gradient-to-b from-gray-950 to-gray-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-5xl mb-6 font-bold text-blue-600">Care and Support for OVC</h1>
-        <p className="text-xl text-slate-600 mb-12 max-w-3xl">
+        <h1 className="text-5xl mb-6 font-bold text-white" style={{ fontFamily: "'Orbitron', sans-serif" }}>Care and Support for OVC</h1>
+        <p className="text-xl text-gray-300 mb-12 max-w-3xl">
           Promoting the value of working together to assist Orphans and Vulnerable Children in our communities.
         </p>
 
         <div className="grid md:grid-cols-2 gap-8 mb-12">
-          <Card className="hover:shadow-xl transition-all">
+          <Card className="hover:shadow-xl transition-all bg-gray-800/50 border-gray-700/50">
             <CardContent className="p-8">
-              <h3 className="text-2xl mb-4 font-bold text-blue-600">Our Goal</h3>
-              <p className="text-slate-700 text-lg">Provide care and support for 500 orphans and vulnerable children per annum</p>
+              <h3 className="text-2xl mb-4 font-bold text-cyan-400">Our Goal</h3>
+              <p className="text-gray-300 text-lg">Provide care and support for 500 orphans and vulnerable children per annum</p>
             </CardContent>
           </Card>
 
-          <Card className="hover:shadow-xl transition-all">
+          <Card className="hover:shadow-xl transition-all bg-gray-800/50 border-gray-700/50">
             <CardContent className="p-8">
-              <h3 className="text-2xl mb-4 font-bold text-blue-600">Our Approach</h3>
-              <p className="text-slate-700 text-lg">Increased access to social services and welfare for disadvantaged and vulnerable groups</p>
+              <h3 className="text-2xl mb-4 font-bold text-cyan-400">Our Approach</h3>
+              <p className="text-gray-300 text-lg">Increased access to social services and welfare for disadvantaged and vulnerable groups</p>
             </CardContent>
           </Card>
         </div>
 
-        <Card className="mb-12">
+        <Card className="mb-12 bg-gray-800/50 border-gray-700/50">
           <CardContent className="p-8">
-            <h3 className="text-2xl mb-6 font-bold text-blue-600">How We Work</h3>
-            <div className="space-y-4 text-slate-700">
+            <h3 className="text-2xl mb-6 font-bold text-cyan-400">How We Work</h3>
+            <div className="space-y-4 text-gray-300">
               <p className="flex items-start">
-                <span className="text-blue-600 mr-3 text-xl">•</span>
+                <span className="text-cyan-400 mr-3 text-xl">•</span>
                 <span>The organization mobilizes people to help one another and not always look for aid externally</span>
               </p>
               <p className="flex items-start">
-                <span className="text-blue-600 mr-3 text-xl">•</span>
+                <span className="text-cyan-400 mr-3 text-xl">•</span>
                 <span>DDI continues to collect and coordinate aid for the poor, the needy and orphans</span>
               </p>
               <p className="flex items-start">
-                <span className="text-blue-600 mr-3 text-xl">•</span>
+                <span className="text-cyan-400 mr-3 text-xl">•</span>
                 <span>DDI creates major strategies to study and analyze the problems of OVC and devise strategies to support them</span>
               </p>
             </div>
@@ -183,20 +183,20 @@ function Consult() {
   ];
 
   return (
-    <div className="py-20">
+    <div className="py-20 bg-gradient-to-b from-gray-950 to-gray-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-5xl mb-6">DDI Consult</h1>
-        <p className="text-xl text-gray-600 mb-12 max-w-3xl">
+        <h1 className="text-5xl mb-6 text-white" style={{ fontFamily: "'Orbitron', sans-serif" }}>DDI Consult</h1>
+        <p className="text-xl text-gray-300 mb-12 max-w-3xl">
           Professional consulting services helping businesses, NGOs, and government agencies 
           improve their operations and achieve their goals.
         </p>
 
         <div className="grid md:grid-cols-2 gap-8">
           {services.map((service, index) => (
-            <Card key={index}>
+            <Card key={index} className="bg-gray-800/50 border-gray-700/50">
               <CardContent className="p-8">
-                <h3 className="text-2xl mb-3 text-green-600">{service.title}</h3>
-                <p className="text-gray-700 text-lg">{service.description}</p>
+                <h3 className="text-2xl mb-3 text-cyan-400">{service.title}</h3>
+                <p className="text-gray-300 text-lg">{service.description}</p>
               </CardContent>
             </Card>
           ))}
@@ -223,20 +223,20 @@ function Ventures() {
   ];
 
   return (
-    <div className="py-20">
+    <div className="py-20 bg-gradient-to-b from-gray-950 to-gray-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-5xl mb-6">DDI Ventures</h1>
-        <p className="text-xl text-gray-600 mb-12 max-w-3xl">
+        <h1 className="text-5xl mb-6 text-white" style={{ fontFamily: "'Orbitron', sans-serif" }}>DDI Ventures</h1>
+        <p className="text-xl text-gray-300 mb-12 max-w-3xl">
           Our media and entertainment ventures create content and experiences that entertain, 
           educate, and inspire positive change.
         </p>
 
         <div className="space-y-8">
           {ventures.map((venture, index) => (
-            <Card key={index}>
+            <Card key={index} className="bg-gray-800/50 border-gray-700/50">
               <CardContent className="p-8">
-                <h3 className="text-3xl mb-4 text-purple-600">{venture.title}</h3>
-                <p className="text-gray-700 text-lg">{venture.description}</p>
+                <h3 className="text-3xl mb-4 text-purple-400">{venture.title}</h3>
+                <p className="text-gray-300 text-lg">{venture.description}</p>
               </CardContent>
             </Card>
           ))}
@@ -283,22 +283,22 @@ function EconomicEmpowerment() {
   ];
 
   return (
-    <div className="py-20 bg-slate-50">
+    <div className="py-20 bg-gradient-to-b from-gray-950 to-gray-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-5xl mb-6 font-bold text-blue-600">Youth Empowerment & Engagement</h1>
-        <p className="text-xl text-slate-600 mb-12 max-w-3xl">
+        <h1 className="text-5xl mb-6 font-bold text-white" style={{ fontFamily: "'Orbitron', sans-serif" }}>Youth Empowerment & Engagement</h1>
+        <p className="text-xl text-gray-300 mb-12 max-w-3xl">
           Our approach targets youth aged 10-35 years, covering those in and out of school, with varying levels of education from primary to postgraduate.
         </p>
 
         <div className="grid md:grid-cols-2 gap-8">
           {programs.map((program, index) => (
-            <Card key={index} className="hover:shadow-xl transition-all">
+            <Card key={index} className="hover:shadow-xl transition-all bg-gray-800/50 border-gray-700/50">
               <CardContent className="p-8">
-                <h3 className="text-2xl mb-3 font-bold text-blue-600">{program.title}</h3>
-                <p className="text-slate-700 mb-4">{program.description}</p>
+                <h3 className="text-2xl mb-3 font-bold text-cyan-400" style={{ fontFamily: "'Orbitron', sans-serif" }}>{program.title}</h3>
+                <p className="text-gray-300 mb-4">{program.description}</p>
                 <div className="space-y-2 text-sm">
-                  <p className="text-slate-600"><span className="font-semibold">Target:</span> {program.target}</p>
-                  <p className="text-slate-600"><span className="font-semibold">Goal:</span> {program.goal}</p>
+                  <p className="text-gray-400"><span className="font-semibold text-cyan-400">Target:</span> {program.target}</p>
+                  <p className="text-gray-400"><span className="font-semibold text-cyan-400">Goal:</span> {program.goal}</p>
                 </div>
               </CardContent>
             </Card>
@@ -330,64 +330,64 @@ function Education() {
   ];
 
   return (
-    <div className="py-20 bg-slate-50">
+    <div className="py-20 bg-gradient-to-b from-gray-950 to-gray-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-5xl mb-6 font-bold text-blue-600">Destiny Equip Mission (DEM)</h1>
-        <p className="text-xl text-slate-600 mb-8 max-w-3xl">
+        <h1 className="text-5xl mb-6 font-bold text-white" style={{ fontFamily: "'Orbitron', sans-serif" }}>Destiny Equip Mission (DEM)</h1>
+        <p className="text-xl text-gray-300 mb-8 max-w-3xl">
           A transformative youth development initiative focused on raising a new generation of institution and nation builders.
         </p>
 
         <div className="grid md:grid-cols-2 gap-8 mb-12">
-          <Card className="hover:shadow-xl transition-all">
+          <Card className="hover:shadow-xl transition-all bg-gray-800/50 border-gray-700/50">
             <CardContent className="p-8">
-              <h3 className="text-2xl mb-4 font-bold text-blue-600">Vision</h3>
-              <p className="text-slate-700 text-lg">Raising young institution and nation builders</p>
+              <h3 className="text-2xl mb-4 font-bold text-cyan-400" style={{ fontFamily: "'Orbitron', sans-serif" }}>Vision</h3>
+              <p className="text-gray-300 text-lg">Raising young institution and nation builders</p>
             </CardContent>
           </Card>
 
-          <Card className="hover:shadow-xl transition-all">
+          <Card className="hover:shadow-xl transition-all bg-gray-800/50 border-gray-700/50">
             <CardContent className="p-8">
-              <h3 className="text-2xl mb-4 font-bold text-blue-600">Mission</h3>
-              <p className="text-slate-700 text-lg">Creating, organizing and providing resources material, trainings opportunities, service environment, experience and exposure that will help people develop needed skills and potentials for efficient living</p>
+              <h3 className="text-2xl mb-4 font-bold text-cyan-400" style={{ fontFamily: "'Orbitron', sans-serif" }}>Mission</h3>
+              <p className="text-gray-300 text-lg">Creating, organizing and providing resources material, trainings opportunities, service environment, experience and exposure that will help people develop needed skills and potentials for efficient living</p>
             </CardContent>
           </Card>
         </div>
 
-        <Card className="mb-12">
+        <Card className="mb-12 bg-gray-800/50 border-gray-700/50">
           <CardContent className="p-8">
-            <h3 className="text-2xl mb-6 font-bold text-blue-600">Our Objectives</h3>
+            <h3 className="text-2xl mb-6 font-bold text-cyan-400" style={{ fontFamily: "'Orbitron', sans-serif" }}>Our Objectives</h3>
             <div className="grid md:grid-cols-2 gap-4">
               {objectives.map((objective, index) => (
                 <div key={index} className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold">{index + 1}</span>
-                  <p className="text-slate-700">{objective}</p>
+                  <span className="flex-shrink-0 w-6 h-6 bg-cyan-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{index + 1}</span>
+                  <p className="text-gray-300">{objective}</p>
                 </div>
               ))}
             </div>
           </CardContent>
         </Card>
 
-        <h2 className="text-3xl mb-6 font-bold text-slate-900">Our Operations</h2>
+        <h2 className="text-3xl mb-6 font-bold text-white" style={{ fontFamily: "'Orbitron', sans-serif" }}>Our Operations</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {operations.map((program, index) => (
-            <Card key={index} className="hover:shadow-xl transition-all">
+            <Card key={index} className="hover:shadow-xl transition-all bg-gray-800/50 border-gray-700/50">
               <CardContent className="p-6">
-                <h3 className="text-lg mb-2 font-bold text-blue-600">{program.title}</h3>
-                <p className="text-slate-600">{program.description}</p>
+                <h3 className="text-lg mb-2 font-bold text-cyan-400">{program.title}</h3>
+                <p className="text-gray-400">{program.description}</p>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        <Card className="mt-12">
+        <Card className="mt-12 bg-gray-800/50 border-gray-700/50">
           <CardContent className="p-8">
-            <h3 className="text-2xl mb-4 font-bold text-blue-600">Target Audience</h3>
-            <ul className="space-y-3 text-slate-700">
-              <li className="flex items-start"><span className="text-blue-600 mr-2">•</span><span>Young People (Ages 12–35): Teenagers, students, fresh graduates, emerging professionals</span></li>
-              <li className="flex items-start"><span className="text-blue-600 mr-2">•</span><span>Youth in Secondary and Tertiary Institutions</span></li>
-              <li className="flex items-start"><span className="text-blue-600 mr-2">•</span><span>Church-Based Youth Groups and Fellowship Leaders</span></li>
-              <li className="flex items-start"><span className="text-blue-600 mr-2">•</span><span>Young Adults in Transition navigating post-school life</span></li>
-              <li className="flex items-start"><span className="text-blue-600 mr-2">•</span><span>Aspiring Change-Makers and Community Builders</span></li>
+            <h3 className="text-2xl mb-4 font-bold text-cyan-400" style={{ fontFamily: "'Orbitron', sans-serif" }}>Target Audience</h3>
+            <ul className="space-y-3 text-gray-300">
+              <li className="flex items-start"><span className="text-cyan-400 mr-2">•</span><span>Young People (Ages 12–35): Teenagers, students, fresh graduates, emerging professionals</span></li>
+              <li className="flex items-start"><span className="text-cyan-400 mr-2">•</span><span>Youth in Secondary and Tertiary Institutions</span></li>
+              <li className="flex items-start"><span className="text-cyan-400 mr-2">•</span><span>Church-Based Youth Groups and Fellowship Leaders</span></li>
+              <li className="flex items-start"><span className="text-cyan-400 mr-2">•</span><span>Young Adults in Transition navigating post-school life</span></li>
+              <li className="flex items-start"><span className="text-cyan-400 mr-2">•</span><span>Aspiring Change-Makers and Community Builders</span></li>
             </ul>
           </CardContent>
         </Card>
@@ -398,43 +398,43 @@ function Education() {
 
 function MicroCredit() {
   return (
-    <div className="py-20">
+    <div className="py-20 bg-gradient-to-b from-gray-950 to-gray-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-5xl mb-6">Micro-Credit Scheme (MCS)</h1>
-        <p className="text-xl text-gray-600 mb-12">
+        <h1 className="text-5xl mb-6 text-white" style={{ fontFamily: "'Orbitron', sans-serif" }}>Micro-Credit Scheme (MCS)</h1>
+        <p className="text-xl text-gray-300 mb-12">
           Providing accessible financial services to entrepreneurs and small businesses who lack 
           access to traditional banking services.
         </p>
 
         <div className="space-y-8">
-          <Card>
+          <Card className="bg-gray-800/50 border-gray-700/50">
             <CardContent className="p-8">
-              <h3 className="text-2xl mb-4 text-teal-600">What We Offer</h3>
-              <ul className="space-y-3 text-gray-700">
+              <h3 className="text-2xl mb-4 text-cyan-400" style={{ fontFamily: "'Orbitron', sans-serif" }}>What We Offer</h3>
+              <ul className="space-y-3 text-gray-300">
                 <li className="flex items-start">
-                  <span className="text-teal-600 mr-2">•</span>
+                  <span className="text-cyan-400 mr-2">•</span>
                   <span>Small loans for business startup and expansion</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-teal-600 mr-2">•</span>
+                  <span className="text-cyan-400 mr-2">•</span>
                   <span>Flexible repayment terms designed for small businesses</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-teal-600 mr-2">•</span>
+                  <span className="text-cyan-400 mr-2">•</span>
                   <span>Financial literacy training and business support</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-teal-600 mr-2">•</span>
+                  <span className="text-cyan-400 mr-2">•</span>
                   <span>Group lending and savings programs</span>
                 </li>
               </ul>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-gray-800/50 border-gray-700/50">
             <CardContent className="p-8">
-              <h3 className="text-2xl mb-4 text-teal-600">Who Can Benefit</h3>
-              <p className="text-gray-700">
+              <h3 className="text-2xl mb-4 text-cyan-400" style={{ fontFamily: "'Orbitron', sans-serif" }}>Who Can Benefit</h3>
+              <p className="text-gray-300">
                 Our micro-credit scheme is designed for entrepreneurs, artisans, farmers, and 
                 small business owners who need capital to start or grow their businesses but 
                 lack collateral or credit history for traditional loans.
@@ -475,23 +475,23 @@ function Projects() {
   ];
 
   return (
-    <div className="py-20 bg-slate-50">
+    <div className="py-20 bg-gradient-to-b from-gray-950 to-gray-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-5xl mb-6 font-bold text-blue-600">Foundation Partnerships</h1>
-        <p className="text-xl text-slate-600 mb-12 max-w-3xl">
+        <h1 className="text-5xl mb-6 font-bold text-white" style={{ fontFamily: "'Orbitron', sans-serif" }}>Foundation Partnerships</h1>
+        <p className="text-xl text-gray-300 mb-12 max-w-3xl">
           Community support initiatives undertaken in collaboration with DDI Social Services and DDI MicroCredit Scheme.
         </p>
 
         <div className="space-y-8">
           {foundations.map((foundation, index) => (
-            <Card key={index} className="hover:shadow-xl transition-all">
+            <Card key={index} className="hover:shadow-xl transition-all bg-gray-800/50 border-gray-700/50">
               <CardContent className="p-8">
-                <h2 className="text-3xl mb-6 font-bold text-blue-600">{foundation.name}</h2>
+                <h2 className="text-3xl mb-6 font-bold text-cyan-400" style={{ fontFamily: "'Orbitron', sans-serif" }}>{foundation.name}</h2>
                 <div className="grid md:grid-cols-2 gap-6">
                   {foundation.initiatives.map((initiative, iIndex) => (
-                    <div key={iIndex} className="bg-slate-50 p-6 rounded-lg">
-                      <h3 className="text-lg font-bold text-slate-800 mb-2">{initiative.title}</h3>
-                      <p className="text-slate-600">{initiative.description}</p>
+                    <div key={iIndex} className="bg-gray-900/50 p-6 rounded-lg border border-gray-700/30">
+                      <h3 className="text-lg font-bold text-white mb-2">{initiative.title}</h3>
+                      <p className="text-gray-400">{initiative.description}</p>
                     </div>
                   ))}
                 </div>
@@ -500,28 +500,28 @@ function Projects() {
           ))}
         </div>
 
-        <Card className="mt-12">
+        <Card className="mt-12 bg-gray-800/50 border-gray-700/50">
           <CardContent className="p-8">
-            <h3 className="text-2xl mb-4 font-bold text-blue-600">Overall Impact</h3>
-            <p className="text-slate-700 text-lg mb-6">
+            <h3 className="text-2xl mb-4 font-bold text-cyan-400" style={{ fontFamily: "'Orbitron', sans-serif" }}>Overall Impact</h3>
+            <p className="text-gray-300 text-lg mb-6">
               The collaborative efforts between the foundations and DDI Social Services and DDI Micro Credit Scheme have led to significant improvements in community welfare.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="flex items-start">
-                <span className="text-blue-600 mr-3 text-xl">•</span>
-                <span className="text-slate-700">Enhanced safety for Okada riders</span>
+                <span className="text-cyan-400 mr-3 text-xl">•</span>
+                <span className="text-gray-300">Enhanced safety for Okada riders</span>
               </div>
               <div className="flex items-start">
-                <span className="text-blue-600 mr-3 text-xl">•</span>
-                <span className="text-slate-700">Recognition and motivation for teachers</span>
+                <span className="text-cyan-400 mr-3 text-xl">•</span>
+                <span className="text-gray-300">Recognition and motivation for teachers</span>
               </div>
               <div className="flex items-start">
-                <span className="text-blue-600 mr-3 text-xl">•</span>
-                <span className="text-slate-700">Food security for the elderly</span>
+                <span className="text-cyan-400 mr-3 text-xl">•</span>
+                <span className="text-gray-300">Food security for the elderly</span>
               </div>
               <div className="flex items-start">
-                <span className="text-blue-600 mr-3 text-xl">•</span>
-                <span className="text-slate-700">Economic empowerment for women</span>
+                <span className="text-cyan-400 mr-3 text-xl">•</span>
+                <span className="text-gray-300">Economic empowerment for women</span>
               </div>
             </div>
           </CardContent>

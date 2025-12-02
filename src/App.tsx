@@ -63,7 +63,7 @@ export default function App() {
       case 'blog-post': return id ? `/blog/${id}` : '/blog';
       case 'gallery': return '/gallery';
       case 'contact': return '/contact';
-      case 'mentor': return '/mentor';
+      case 'mentor': return '/destiny-coach';
       case 'admin-login': return '/admin/login';
       case 'admin-dashboard': return '/admin/dashboard';
       default: return '/';
@@ -94,7 +94,7 @@ export default function App() {
     }
     if (p === '/gallery') return { page: 'gallery' as Page };
     if (p === '/contact') return { page: 'contact' as Page };
-    if (p === '/mentor') return { page: 'mentor' as Page };
+    if (p === '/mentor' || p === '/destiny-coach') return { page: 'mentor' as Page };
     if (p === '/admin/login') return { page: 'admin-login' as Page };
     if (p === '/admin/dashboard') return { page: 'admin-dashboard' as Page };
     return { page: 'home' as Page };
@@ -199,7 +199,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-gray-950">
       <Navigation 
         currentPage={currentPage} 
         onNavigate={navigate}
